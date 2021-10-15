@@ -1,8 +1,10 @@
 import Products from "./Product/Products";
+import SignUp from "./SignUp/SignUp";
+
 function App() {
 	return (
 		<div className="App">
-			<Products />
+			<SignUp />
 		</div>
 	);
 }
