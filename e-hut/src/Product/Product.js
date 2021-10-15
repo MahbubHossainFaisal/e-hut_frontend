@@ -2,17 +2,7 @@ import React, { useState } from "react";
 import "./Product.css";
 
 const Product = (props) => {
-	const [product, setProduct] = useState({
-		data: {
-			id: props.value.id,
-			name: props.value.name,
-			price: props.value.price,
-			image: props.value.image,
-			rating: props.value.rating,
-			describtion: props.value.description,
-		},
-	});
-
+	
 	return (
 		<React.Fragment>
 			<div class="product-content product-wrap clearfix">
@@ -33,16 +23,16 @@ const Product = (props) => {
 						<div class="product-deatil">
 							<h5 class="name">
 								<a href="#">
-									<span>{product.data.name}</span>
+									<span>{props.value.name}</span>
 								</a>
 							</h5>
 							<p class="price-container">
-								<span>{product.data.price}</span>
+								<span>{props.value.price}</span>
 							</p>
 							<span class="tag1"></span>
 						</div>
 						<div class="description">
-							<p>{product.data.describtion} </p>
+							<p>{props.value.describtion} </p>
 						</div>
 						<div class="product-info smart-form">
 							<div class="row">

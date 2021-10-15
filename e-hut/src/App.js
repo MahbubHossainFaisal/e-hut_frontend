@@ -3,9 +3,10 @@ import SignUp from "./SignUp/SignUp";
 import Login from "./Login/Login";
 
 function App() {
+  console.log('Checking')
   return (
     <div className="App">
-      <Login />
+      <Products />
     </div>
   );
 }
