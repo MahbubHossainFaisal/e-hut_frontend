@@ -1,4 +1,5 @@
 import "./Login.css";
+import axios from "axios";
 
 const Login = () => {
   return (
@@ -52,7 +53,7 @@ const Login = () => {
                     type="submit"
                     name="submit"
                     class="btn btn-info btn-md"
-                    value="submit"
+                    value="Submit"
                   />
                 </div>
                 <div id="register-link" class="text-right">
