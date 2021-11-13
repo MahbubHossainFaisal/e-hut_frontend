@@ -4,6 +4,7 @@
   height: 350px;
   border: 1px solid #9c9c9c;
   background-color: #313837;
+  margin: 20px;
 }
 #login .container #login-row #login-column #login-box #login-form {
   padding: 20px;
