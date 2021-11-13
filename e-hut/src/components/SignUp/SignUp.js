@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import "./SignUp.css";
 
-class SignUp extends React.Component {
-	render() {
+const SignUp = () => {
+	
 		return (
 			<React.Fragment>
 				<form action="">
@@ -71,7 +71,7 @@ class SignUp extends React.Component {
 				</form>
 			</React.Fragment>
 		);
-	}
+	
 }
 
 export default SignUp;
