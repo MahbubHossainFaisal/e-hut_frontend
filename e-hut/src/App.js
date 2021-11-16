@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import Login from "./components/Login/Login";
 import Products from "./components/Product/Products";
 import SignUp from "./components/SignUp/SignUp";
+import ProductDetails from './components/Product/ProductDetails';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/signup" component={SignUp} />
             
           <Route path="/login" component={Login} />
+          <Route path = "/products/:id" component={ProductDetails} />
           
         </Switch>
       <Footer />

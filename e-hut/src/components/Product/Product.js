@@ -1,4 +1,5 @@
 import React from "react";
+import {NavLink} from 'react-router-dom'
 import "./Product.css";
 
 const Product = (props) => {
@@ -13,7 +14,7 @@ const Product = (props) => {
                 height="228"
                 width="194"
                 alt="194x228"
-                class="img-responsive"
+                className="img-responsive"
               />
               <span className="tag2 hot">HOT</span>
             </div>
@@ -36,9 +37,12 @@ const Product = (props) => {
             <div className="product-info smart-form">
               <div className="row">
                 <div className="">
-                  <a href="#" className="btn btn-success">
+                  <a href="#" className="btn btn-success m-1">
                     Add to cart
                   </a>
+                </div>
+                <div> 
+                   <NavLink to={`/products/${props.id}`} className='btn btn-success m-1'>See Details</NavLink>
                 </div>
               </div>
             </div>
