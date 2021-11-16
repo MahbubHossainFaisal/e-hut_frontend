@@ -16,9 +16,9 @@ const Header = () => {
                 <span className="me-5 text-white"><i className="fas fa-shopping-cart"></i> Cart </span>
                 <span className="me-5 text-white"><i className="fas fa-user"></i> User </span>
                 <span>
-                <NavLink to='/signup' style={{ textDecoration: 'none' }}>Sign UP</NavLink>
-                /
-                <NavLink to='/login' style={{ textDecoration: 'none' }}>Login</NavLink>
+                <NavLink to='/signup' style={{ textDecoration: 'none', color:'white' }}>Sign Up</NavLink>
+                <span style={{ color: 'white' }}> or </span>
+                <NavLink to='/login' style={{ textDecoration: 'none', color:'white' }}>Login</NavLink>
                 </span>
             </div>
            

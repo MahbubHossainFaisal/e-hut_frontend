@@ -1,10 +1,7 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Product from "./Product";
 import "./Products.css";
-import ProductData from "./ProductData";
-import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
 function Products() {
   const [product, setProduct] = useState([]);
   useEffect(() => {
@@ -21,7 +18,9 @@ function Products() {
     <React.Fragment>
       <div className="main-content">
         {product.map((item) => (
-          <Product key={item.ProductId} value={item} />
+        
+          <Product key={item.ProductId} value={item} id={item.ProductId} />
+          
         ))}
       </div>
     </React.Fragment>
