@@ -65,7 +65,7 @@ const ProductDetails = ({ match }) => {
                 <Button
                   className="btn-block btn-success"
                   type="button"
-                  disabled={product.Status === false}
+                  disabled={product.status === false}
                 >
                   Add To Cart
                 </Button>
