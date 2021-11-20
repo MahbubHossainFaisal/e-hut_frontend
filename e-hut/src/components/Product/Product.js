@@ -1,5 +1,5 @@
 import React from "react";
-import {NavLink} from 'react-router-dom'
+import { NavLink } from "react-router-dom";
 import "./Product.css";
 
 const Product = (props) => {
@@ -23,16 +23,16 @@ const Product = (props) => {
             <div className="product-deatil">
               <h5 className="name">
                 <a href="#">
-                  <span>{props.value.Name}</span>
+                  <span>{props.value.name}</span>
                 </a>
               </h5>
               <p className="price-container">
-                <span>{props.value.Price}</span>
+                <span>{props.value.price}</span>
               </p>
               <span className="tag1"></span>
             </div>
             <div className="description">
-              <p>{props.value.Details} </p>
+              <p>{props.value.details} </p>
             </div>
             <div className="product-info smart-form">
               <div className="row">
@@ -41,8 +41,13 @@ const Product = (props) => {
                     Add to cart
                   </a>
                 </div>
-                <div> 
-                   <NavLink to={`/products/${props.id}`} className='btn btn-success m-1'>See Details</NavLink>
+                <div>
+                  <NavLink
+                    to={`/products/${props.id}`}
+                    className="btn btn-success m-1"
+                  >
+                    See Details
+                  </NavLink>
                 </div>
               </div>
             </div>

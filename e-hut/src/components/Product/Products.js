@@ -18,9 +18,7 @@ function Products() {
     <React.Fragment>
       <div className="main-content">
         {product.map((item) => (
-        
           <Product key={item.ProductId} value={item} id={item.ProductId} />
-          
         ))}
       </div>
     </React.Fragment>
