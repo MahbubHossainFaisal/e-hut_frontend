@@ -1,25 +1,62 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import reactDom from "react-dom";
 import "./AddProduct.css";
 
 const AddProduct = (props) => {
+	const [product, setProduct] = useState({
+		Name: "",
+		BrandId: "",
+		CategoryId: "",
+		Details: "",
+		Warrenty: "",
+		Price: "",
+		Status: "true",
+	});
+
+	const { Name, BrandId, CategoryId, Details, Warrenty, Price, Status } =
+		product;
+
+	const onInputChange = (e) => {
+		setProduct({ ...product, [e.target.name]: [e.target.value] });
+	};
+
+	const onSubmit = async (e) => {
+		e.preventDefault();
+		await axios
+			.post("https://localhost:44390/api/products", product)
+			.then((res) => {
+				console.log(res);
+				alert("product added.");
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
 	return (
 		<React.Fragment>
 			<br />
 			<br />
 			<div className="mainContent">
-				<form action="" className="">
+				<form action="" className="" onSubmit={(e) => onSubmit(e)}>
 					<div className="form-group">
 						<input
 							type="text"
 							className="form-control"
-							name="name"
+							name="Name"
 							placeholder="Product Name"
+							value={Name}
+							onChange={(e) => onInputChange(e)}
 						></input>
 					</div>
 					<div className="">
 						<label>Brand:</label>
-						<select name="brand" className="form-select form-select-lg mb-3 ">
+						<select
+							name="BrandId"
+							className="form-select form-select-lg mb-3 "
+							onChange={(e) => onInputChange(e)}
+						>
 							<option className="" value="1">
 								Apex
 							</option>
@@ -30,8 +67,12 @@ const AddProduct = (props) => {
 					</div>
 
 					<div className="">
-						<label>Catgory</label>
-						<select name="name" className="form-select form-select-lg mb-3">
+						<label>Category</label>
+						<select
+							name="CategoryId"
+							className="form-select form-select-lg mb-3"
+							onChange={(e) => onInputChange(e)}
+						>
 							<option value="1">Vegetable</option>
 							<option value="1">oil</option>
 						</select>
@@ -39,19 +80,44 @@ const AddProduct = (props) => {
 
 					<div className="form-group">
 						<label>Details</label>
-						<textarea name="details" className="form-control" />
+						<textarea
+							name="Details"
+							className="form-control"
+							value={Details}
+							onChange={(e) => onInputChange(e)}
+						/>
 					</div>
 
 					<div className="form-group">
 						<label>Warrenty</label>
-						<select className="form-control">
+						<select
+							className="form-control"
+							name="Warrenty"
+							onChange={(e) => onInputChange(e)}
+						>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
 						</select>
 					</div>
+					<br />
+					<div className="form-group">
+						<input
+							type="text"
+							className="form-control"
+							name="Price"
+							placeholder="Price"
+							value={Price}
+							onChange={(e) => onInputChange(e)}
+						></input>
+					</div>
 
-					<input type="hidden" name="status" value="true"></input>
+					<input
+						type="hidden"
+						name="Status"
+						value="true"
+						onChange={(e) => onInputChange(e)}
+					></input>
 
 					<br />
 					<div className="">
