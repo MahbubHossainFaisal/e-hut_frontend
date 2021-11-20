@@ -25,30 +25,17 @@ const AddProduct = (props) => {
 		e.preventDefault();
 		await axios
 			.post("https://localhost:44390/api/products", {
-				Name: "",
-				BrandId: product.BrandId,
-				CategoryId: product.CategoryId,
-				Details: product.Details,
-				Warranty: product.Warrenty,
-				Price: product.Price,
+				Name: product.Name[0],
+				BrandId: product.BrandId[0],
+				CategoryId: product.CategoryId[0],
+				Details: product.Details[0],
+				Warranty: product.Warrenty[0],
+				Price: product.Price[0],
 				Status: true,
 			})
 			.then((res) => {
-				if (res.data.status === 200) {
+				if (res.data.status === 204) {
 					alert("Product Added");
-				} else {
-					alert("Product Not Added");
-					console.log(
-						product.Name +
-							".." +
-							product.BrandId +
-							".." +
-							product.BrandId +
-							"..." +
-							product.CategoryId +
-							" .." +
-							product.Details
-					);
 				}
 			})
 			.catch((error) => {
