@@ -1,11 +1,8 @@
-.form-content {
-	padding: 0% 30% 0% 30%;
+.mainContent {
+	width: 50%;
+	margin-left: 25%;
+}
 
-	margin-bottom: 2%;
-}
-.form-control {
-	border-radius: 1.5rem;
-}
 .btnSubmit {
 	border: none;
 	border-radius: 1.5rem;

@@ -2,9 +2,9 @@
   margin-top: 120px;
   max-width: 600px;
   height: 350px;
-  border: 1px solid #9c9c9c;
-  background-color: #313837;
+  background-color: #ffffff;
   margin: 20px;
+  border-radius: 25px;
 }
 #login .container #login-row #login-column #login-box #login-form {
   padding: 20px;

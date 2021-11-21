@@ -1,9 +1,40 @@
 import "./Login.css";
 import axios from "axios";
+import React, { Component } from "react";
+import { Form } from "react-bootstrap";
+
+let email, passWord;
+const setEmail = (event) => {
+  email = event.target.value;
+};
+
+const setPassword = (event) => {
+  passWord = event.target.value;
+};
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const data = {
+    email: email,
+    passWord: passWord,
+  };
+  axios
+    .post("https://localhost:44390/api/Admins", data)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const Login = () => {
   return (
     <div id="login">
+      <br />
+      <br />
+      <br />
       <div class="container">
         <div
           id="login-row"
@@ -11,7 +42,7 @@ const Login = () => {
         >
           <div id="login-column" class="col-md-6">
             <div id="login-box" class="col-md-12">
-              <form id="login-form" class="form" action="" method="post">
+              <form id="login-form" class="form" onSubmit={handleSubmit}>
                 <h3 class="text-center text-info">Login</h3>
                 <div class="form-group">
                   <label for="username" class="text-info">
@@ -23,6 +54,7 @@ const Login = () => {
                     name="username"
                     id="username"
                     class="form-control"
+                    onChange={setEmail}
                   />
                 </div>
                 <div class="form-group">
@@ -35,6 +67,7 @@ const Login = () => {
                     name="password"
                     id="password"
                     class="form-control"
+                    onChange={setPassword}
                   />
                 </div>
                 <div class="form-group">
