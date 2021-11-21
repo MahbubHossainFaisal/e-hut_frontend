@@ -43,7 +43,7 @@ const ProductDetails = ({match}) => {
                                         Price:
                                     </Col>
                                     <Col>
-                                        <strong>${product.Price}</strong>
+                                        <strong>BDT. {product.Price}</strong>
                                     </Col>
                                 </Row>
                             </ListGroupItem>
