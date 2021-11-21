@@ -7,6 +7,7 @@ import Products from "./components/Product/Products";
 import SignUp from "./components/SignUp/SignUp";
 import AddProduct from "./components/Product/AddProduct";
 import ProductDetails from "./components/Product/ProductDetails";
+import ShopSignUp from "./components/Shops/shopSignUp";
 
 function App() {
 	return (
@@ -20,7 +21,8 @@ function App() {
 				<Route path="/login" component={Login} />
 				<Route path="/products/:id" component={ProductDetails} />
 				<Route path="/product/add" component={AddProduct} />
-			</Switch>
+				<Route path="/shopsignup" component={ShopSignUp} />
+			</Switch> 
 			<Footer />
 		</React.Fragment>
 	);
