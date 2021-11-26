@@ -15,14 +15,12 @@ function App() {
 			<Header />
 			<Switch>
 				<Route exact path="/" component={Products} />
-
-				<Route path="/signup" component={SignUp} />
-
+				<Route exact path="/signup" component={SignUp} />
+				<Route path="/signup/shop" component={ShopSignUp} />
 				<Route path="/login" component={Login} />
 				<Route path="/products/:id" component={ProductDetails} exact />
 				<Route path="/product/add" component={AddProduct} />
-				<Route path="/shopsignup" component={ShopSignUp} />
-			</Switch> 
+			</Switch>
 			<Footer />
 		</React.Fragment>
 	);

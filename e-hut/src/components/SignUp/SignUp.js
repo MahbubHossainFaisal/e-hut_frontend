@@ -87,11 +87,12 @@ const SignUp = () => {
 						</button>
 					</div>
 					<div className="row">
-						<Link to='/shopsignup'>
+						<Link to="/signup/shop">
 							<button
-							type="button"
-							className="btnSubmit  btn-primary btn-sm text-center my-2">
-							SignUp For Your Shop
+								type="button"
+								className="btnSubmit  btn-primary btn-sm text-center my-2"
+							>
+								SignUp For Your Shop
 							</button>
 						</Link>
 					</div>

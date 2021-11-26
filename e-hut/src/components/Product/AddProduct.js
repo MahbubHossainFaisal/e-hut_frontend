@@ -34,9 +34,7 @@ const AddProduct = (props) => {
 				Status: true,
 			})
 			.then((res) => {
-				if (res.data.status === 204) {
-					alert("Product Added");
-				}
+				alert("Product Added");
 			})
 			.catch((error) => {
 				console.log(error);
