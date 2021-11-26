@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "./SignUp.css";
 
 const SignUp = () => {
+	const [name, setName] = useState("");
+	const [phone, setPhone] = useState("");
+	const [email, setEmail] = useState("");
+	const [gender, setGender] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const [address, setAddress] = useState("");
+
+	const SubmitHandler = async (e) => {};
+
 	return (
 		<React.Fragment>
 			<br />
@@ -14,18 +25,24 @@ const SignUp = () => {
 						className="form-control"
 						type="text"
 						placeholder="Enter your Name"
+						value={name}
+						onChange={(e) => setName(e.target.value)}
 					/>
 					<br />
 					<input
 						className="form-control"
 						type="text"
 						placeholder="Enter Your Phone Number"
+						value={phone}
+						onChange={(e) => setPhone(e.target.value)}
 					/>
 					<br />
 					<input
 						className="form-control"
 						type="email"
 						placeholder="Enter Your Email Address"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
 					/>
 					<br />
 					<div className="gender-radio ">
@@ -63,6 +80,8 @@ const SignUp = () => {
 						type="password"
 						name="password"
 						placeholder="Enter your password"
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
 					/>
 					<br />
 					<input
@@ -70,12 +89,16 @@ const SignUp = () => {
 						type="password"
 						name="password"
 						placeholder="Confirm your password"
+						value={confirmPassword}
+						onChange={(e) => setConfirmPassword(e.target.value)}
 					/>{" "}
 					<br />
 					<input
 						className="form-control"
 						type="text"
 						placeholder="Enter Your Address"
+						value={address}
+						onChange={(e) => setAddress(e.target.value)}
 					/>
 					<br />
 					<div className="row">
