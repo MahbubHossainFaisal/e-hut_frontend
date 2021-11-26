@@ -146,7 +146,7 @@ const ShopSignUp = () => {
 					Sign Up
 				</button>
 				<p className="my-auto">
-					Already registered <a href="#">sign in?</a>
+					Already registered <a href="/login">sign in?</a>
 				</p>
 			</form>
 			<br />
