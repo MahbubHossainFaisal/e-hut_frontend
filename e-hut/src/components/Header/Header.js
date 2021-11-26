@@ -7,17 +7,12 @@ const Header = () => {
 
   const SearchProduct = (e) => {
     e.preventDefault();
-    return (
-      <div>
-        <Products searchP={searchProduct} />;
-      </div>
-    );
   };
 
   return (
     <React.Fragment>
       <nav
-        className="navbar navbar-light "
+        className="navbar navbar-light"
         style={{ backgroundColor: "#21D192" }}
       >
         <div className="container-fluid ">
@@ -27,23 +22,6 @@ const Header = () => {
               E-HUT
             </span>{" "}
           </NavLink>
-
-          <form className="d-flex">
-            <input
-              className="form-control me-2 "
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              onChange={(e) => setSearchProduct(e.target.value)}
-            />
-            <button
-              className="btn btn-outline-success text-white"
-              type="submit"
-              onClick={SearchProduct}
-            >
-              Search
-            </button>
-          </form>
           <div>
             <span className="me-5 text-white">
               <i className="fas fa-shopping-cart"></i> Cart{" "}
