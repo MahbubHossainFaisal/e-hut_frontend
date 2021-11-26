@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Product from "./Product";
 import "./Products.css";
-function Products() {
+const Products = (props) => {
+  console.log(props.searchP);
   const [product, setProduct] = useState([]);
   useEffect(() => {
     axios
@@ -13,7 +14,7 @@ function Products() {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, [Product]);
   return (
     <React.Fragment>
       <div className="main-content">
@@ -23,6 +24,6 @@ function Products() {
       </div>
     </React.Fragment>
   );
-}
+};
 
 export default Products;

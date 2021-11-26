@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import Product from "../Product/Product";
+import Products from "../Product/Products";
 
 const Header = () => {
   const [searchProduct, setSearchProduct] = useState("");
 
   const SearchProduct = (e) => {
     e.preventDefault();
-    console.log(searchProduct);
+    return (
+      <div>
+        <Products searchP={searchProduct} />;
+      </div>
+    );
   };
 
   return (
