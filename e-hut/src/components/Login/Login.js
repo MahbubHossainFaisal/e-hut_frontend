@@ -3,26 +3,24 @@ import axios from "axios";
 import React, { Component } from "react";
 import { Form } from "react-bootstrap";
 
-let email, passWord;
-const setEmail = (event) => {
-  email = event.target.value;
+let uname, pass;
+const setusername = (event) => {
+  uname = event.target.value;
 };
 
 const setPassword = (event) => {
-  passWord = event.target.value;
+  pass = event.target.value;
 };
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
-
-  const data = {
-    email: email,
-    passWord: passWord,
-  };
-  axios
-    .post("https://localhost:44390/api/Admins", data)
+  await axios
+    .post("https://localhost:44390/api/Credentials/Login", {
+      Phone: uname,
+      Password: pass,
+    })
     .then((res) => {
-      console.log(res);
+      console.log(res.status);
     })
     .catch((err) => {
       console.log(err);
@@ -54,7 +52,7 @@ const Login = () => {
                     name="username"
                     id="username"
                     class="form-control"
-                    onChange={setEmail}
+                    onChange={setusername}
                   />
                 </div>
                 <div class="form-group">
