@@ -7,7 +7,11 @@ const Products = (props) => {
   const [searchProduct, setSearchProduct] = useState("");
   useEffect(() => {
     axios
-      .get("https://localhost:44390/api/products")
+      .get("https://localhost:44390/api/products", {
+        headers: {
+          Authorization: "Basic " + btoa("1" + ":" + "eraj"),
+        },
+      })
       .then((response) => {
         setProduct(response.data);
       })
