@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import Products from "../Product/Products";
 
 const Header = () => {
   const [searchProduct, setSearchProduct] = useState("");
@@ -23,9 +22,11 @@ const Header = () => {
             </span>{" "}
           </NavLink>
           <div>
-            <span className="me-5 text-white">
+            <NavLink to={`/cart`} style={{ textDecoration: "none", color: "white" }}>
+              <span className="me-5 text-white">
               <i className="fas fa-shopping-cart"></i> Cart{" "}
-            </span>
+              </span>
+            </NavLink>
             <span className="me-5 text-white">
               <i className="fas fa-user"></i> User{" "}
             </span>

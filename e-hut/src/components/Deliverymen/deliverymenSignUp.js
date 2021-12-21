@@ -119,7 +119,7 @@ const DeliverymenSignUp = () => {
 							<label>Gender</label>
 						    <select
 							name="BrandId"
-							className="form-select form-select-lg mb-3 "
+							className="form-select form-select-md mb-3 "
 							onChange={(e) => setGender(e)}
 						    >
 							<option className="" value="Male">

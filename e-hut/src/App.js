@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import CartScreen from "./components/Cart/cart";
 import DeliverymenSignUp from "./components/Deliverymen/deliverymenSignUp";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
@@ -22,6 +23,7 @@ function App() {
 				<Route path="/products/:id" component={ProductDetails} exact />
 				<Route path="/product/add" component={AddProduct} />
 				<Route path="/signup/deliverymen" component={DeliverymenSignUp} />
+				<Route path="/cart" component={CartScreen} />
 			</Switch>
 			<Footer />
 		</React.Fragment>
