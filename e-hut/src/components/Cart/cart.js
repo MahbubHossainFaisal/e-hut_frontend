@@ -10,7 +10,10 @@ const CartScreen = ({match, location, history}) => {
     return (
         <div className={classes.cart}>
             <Row>
-            <Col md={7}>
+            <Col md={1}>
+                
+            </Col>
+            <Col md={6} className=''>
             <h1>Shopping Cart</h1>
             {cartItems.length === 0 ?  'Your cart is empty!'  : (
                 <ListGroup variant='flush'>
@@ -18,16 +21,18 @@ const CartScreen = ({match, location, history}) => {
                         <ListGroupItem key={item.product}>
                         <Row className='bg-light py-2'>
                             <Col md={1}>
+                            </Col>
+                            <Col md={1}>
                                 <Image src={item.image} alt={item.name} fluid rounded />
                             </Col>
+                            <Col md={2}>
+                                <span className='p-2'>{item.name}</span>
+                            </Col>
+                            <Col md={2}>
+                                <span className='p-2'>Price: {item.price}৳</span>
+                            </Col>
                             <Col md={3}>
-                                Name: {item.name}
-                            </Col>
-                            <Col md={2}>
-                                Price: {item.price}৳
-                            </Col>
-                            <Col md={2}>
-                                Amount: {item.amount}
+                               <span className='p-2'>Amount: </span> <button className={classes.minus}>-</button> <span className='p-2'> {item.amount}</span> <button className={classes.plus}>+</button>
                             </Col>
                             <Col md={2}>
                                 <Button type='button' variant='light' >
@@ -42,7 +47,7 @@ const CartScreen = ({match, location, history}) => {
                 
             ) }
             </Col>
-            <Col md={4} className='py-5 m-2'>
+            <Col md={4} className='py-5 my-2'>
                 <Card>
                     <ListGroup variant='flush'>
                         <ListGroupItem>

@@ -1,3 +1,13 @@
 .cart {
   height: 100vh;
 }
+.plus {
+  background-color: green;
+  color: black;
+  border: 1px solid black;
+}
+.minus {
+  background-color: red;
+  color: black;
+  border: 1px solid black;
+}

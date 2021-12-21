@@ -37,9 +37,9 @@ const Product = (props) => {
 						<div className="product-info smart-form">
 							<div className="row">
 								<div className="">
-									<a href="#" className="btn btn-success m-1">
+									<button  className="btn btn-success m-1">
 										Add to cart
-									</a>
+									</button>
 								</div>
 								<div>
 									<NavLink
