@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
-
+import CartContext from "../store/cart-context";
 const Header = () => {
   const [searchProduct, setSearchProduct] = useState("");
+//using cartContext
+  const cartCtx = useContext(CartContext)
+
+  const numberOfCartItems = cartCtx.items.reduce((currNumber,item) =>{
+      return currNumber + item.amount;
+  },0)
 
   const SearchProduct = (e) => {
     e.preventDefault();
@@ -24,7 +30,7 @@ const Header = () => {
           <div>
             <NavLink to={`/cart`} style={{ textDecoration: "none", color: "white" }}>
               <span className="me-5 text-white">
-              <i className="fas fa-shopping-cart"></i> Cart{" "}
+              <i className="fas fa-shopping-cart"></i> View Cart{" "} <span style={{ color: 'yellow' }}>{numberOfCartItems}</span>
               </span>
             </NavLink>
             <span className="me-5 text-white">
