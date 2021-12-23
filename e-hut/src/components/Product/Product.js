@@ -1,8 +1,24 @@
-import React from "react";
+import React, {useContext} from "react";
 import { NavLink } from "react-router-dom";
+import CartContext from "../store/cart-context";
 import "./Product.css";
 
 const Product = (props) => {
+	const cartCtx = useContext(CartContext)
+
+
+	const sendToCartHandler = () =>{
+		cartCtx.addItem({
+			id: props.id,
+			image:'https://freepngimg.com/thumb/categories/291.png',
+			name: props.value.Name,
+			amount: 1,
+			price: props.value.Price,
+
+		})
+
+
+	}
 	return (
 		<React.Fragment>
 			<div className="product-content product-wrap clearfix">
@@ -37,7 +53,7 @@ const Product = (props) => {
 						<div className="product-info smart-form">
 							<div className="row">
 								<div className="">
-									<button  className="btn btn-success m-1">
+									<button  className="btn btn-success m-1" onClick={sendToCartHandler}>
 										Add to cart
 									</button>
 								</div>
