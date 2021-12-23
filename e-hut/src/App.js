@@ -10,13 +10,15 @@ import ProductDetails from "./components/Product/ProductDetails";
 import Products from "./components/Product/Products";
 import ShopSignUp from "./components/Shops/shopSignUp";
 import SignUp from "./components/SignUp/SignUp";
+import Profile from "./components/Profile/ProfileCustomer";
+import ProfileAdditional from "./components/Profile/ProfileCustomerAdditionalInfo";
 
 function App() {
 	return (
 		<React.Fragment>
 			<Header />
 			<Switch>
-				<Route exact path="/" component={Products} />
+				<Route exact path="/home" component={Products} />
 				<Route exact path="/signup" component={SignUp} />
 				<Route path="/signup/shop" component={ShopSignUp} />
 				<Route path="/login" component={Login} />
@@ -24,6 +26,8 @@ function App() {
 				<Route path="/product/add" component={AddProduct} />
 				<Route path="/signup/deliverymen" component={DeliverymenSignUp} />
 				<Route path="/cart" component={CartScreen} />
+				<Route exact path="/user/profile" component={Profile} />
+				<Route exact path="/user/profile/info" component={ProfileAdditional} />
 			</Switch>
 			<Footer />
 		</React.Fragment>
