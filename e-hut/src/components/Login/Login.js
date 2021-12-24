@@ -20,7 +20,6 @@ const handleSubmit = async (e) => {
 			Password: pass,
 		})
 		.then((res) => {
-			return <Redirect to="/home" />;
 			console.log(res.status);
 		})
 		.catch((err) => {
