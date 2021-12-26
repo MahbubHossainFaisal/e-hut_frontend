@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import "./ProfileCustomer.css";
 import ImgData from "../../images/profile.jpg";
@@ -9,10 +9,9 @@ import axios from "axios";
 const Profile = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
 		console.log("working");
 		await axios
-			.post("https://localhost:44390/api/customers", {
+			.put("https://localhost:44390/api/customers/" + customerId, {
 				CustomerId: customerId,
 				Name: name,
 				Phone: phone,
@@ -31,13 +30,11 @@ const Profile = () => {
 				DeliveryTime: deliveryTime,
 			})
 			.then((res) => {
-				console.log(res.Status);
+				console.log(res.status);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
-
-		console.log("done");
 	};
 
 	const [customerId, setCustomerId] = useState("");
@@ -59,36 +56,39 @@ const Profile = () => {
 	const [deliveryDay, setDeliveryDay] = useState("");
 	const [deliveryTime, setDeliveryTime] = useState("");
 
-	var user = localStorage.getItem("user");
-	if (user != null) {
-		var data = JSON.parse(localStorage.getItem("user"));
-		axios
-			.get("https://localhost:44390/api/customers/" + data.UserId)
-			.then((response) => {
-				setCustomerId(response.data.CustomerId);
-				setPhone(response.data.Phone);
-				setEmail(response.data.Email);
-				setName(response.data.Name);
-				setAddress(response.data.Address);
-				setImage(response.data.Image);
-				setGender(response.data.Gender);
-				setPassword(response.data.Password);
-				setNumberOfFamilyMemberAdult(response.data.NumberOffamilyMemberAdult);
-				setNumberOfFamilyMemberChild(response.data.NumberOffamilyMemberChild);
-				setNumberOfDeliveryGrocery(response.data.NumberOfDeliveryGrocery);
-				setNumberOfDeliveryVegetable(response.data.numberOfDeliveryVegetable);
-				setDeliveryTime(response.data.DeliveryTime);
-				setDeliveryDay(response.data.DeliveryDay);
-				//console.log(customerId);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	React.useEffect(() => {
+		var user = localStorage.getItem("user");
+		if (user != null) {
+			var data = JSON.parse(localStorage.getItem("user"));
+			axios
+				.get("https://localhost:44390/api/customers/" + data.UserId)
+				.then((response) => {
+					setCustomerId(response.data.CustomerId);
+					setPhone(response.data.Phone);
+					setEmail(response.data.Email);
+					setName(response.data.Name);
+					setAddress(response.data.Address);
+					setImage(response.data.Image);
+					setGender(response.data.Gender);
+					setPassword(response.data.Password);
+					setNumberOfFamilyMemberAdult(response.data.NumberOffamilyMemberAdult);
+					setNumberOfFamilyMemberChild(response.data.NumberOffamilyMemberChild);
+					setNumberOfDeliveryGrocery(response.data.NumberOfDeliveryGrocery);
+					setNumberOfDeliveryVegetable(response.data.numberOfDeliveryVegetable);
+					setDeliveryTime(response.data.DeliveryTime);
+					setDeliveryDay(response.data.DeliveryDay);
+					//console.log(customerId);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 
-		//	console.log(data);
-	} else {
-		return <Redirect to="/login" />;
-	}
+			//	console.log(data);
+		} else {
+			return <Redirect to="/login" />;
+		}
+	}, []);
+
 	//console.log(user.Role);
 	return (
 		<React.Fragment>
