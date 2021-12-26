@@ -59,6 +59,13 @@ const Header = () => {
 							>
 								Login
 							</NavLink>
+
+							<NavLink
+								to="/logout"
+								style={{ textDecoration: "none", color: "white" }}
+							>
+								Logout
+							</NavLink>
 						</span>
 					</div>
 				</div>

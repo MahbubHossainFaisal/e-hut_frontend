@@ -5,6 +5,7 @@ import DeliverymenSignUp from "./components/Deliverymen/deliverymenSignUp";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Login from "./components/Login/Login";
+import Logout from "./components/Login/Logout";
 import AddProduct from "./components/Product/AddProduct";
 import ProductDetails from "./components/Product/ProductDetails";
 import Products from "./components/Product/Products";
@@ -22,6 +23,7 @@ function App() {
 				<Route exact path="/signup" component={SignUp} />
 				<Route path="/signup/shop" component={ShopSignUp} />
 				<Route path="/login" component={Login} />
+				<Route path="/logout" component={Logout} />
 				<Route path="/products/:id" component={ProductDetails} exact />
 				<Route path="/product/add" component={AddProduct} />
 				<Route path="/signup/deliverymen" component={DeliverymenSignUp} />
