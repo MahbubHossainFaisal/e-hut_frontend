@@ -1,37 +1,40 @@
 import "./Login.css";
 import axios from "axios";
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-
-let uname, pass;
-const setusername = (event) => {
-	uname = event.target.value;
-};
-
-const setPassword = (event) => {
-	pass = event.target.value;
-};
-
-const handleSubmit = async (e) => {
-	e.preventDefault();
-	await axios
-		.post("https://localhost:44390/api/Credentials/Login", {
-			Phone: uname,
-			Password: pass,
-		})
-		.then((res) => {
-			if (res.status == 200) {
-				if (res.data != null) {
-					localStorage.setItem("user", JSON.stringify(res.data));
-				}
-			}
-		})
-		.catch((err) => {
-			console.log(err);
-		});
-};
+import { Redirect, useHistory } from "react-router-dom";
 
 const Login = () => {
+	const history = useHistory();
+	let uname, pass;
+	const setusername = (event) => {
+		uname = event.target.value;
+	};
+
+	const setPassword = (event) => {
+		pass = event.target.value;
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		await axios
+			.post("https://localhost:44390/api/Credentials/Login", {
+				Phone: uname,
+				Password: pass,
+			})
+			.then((res) => {
+				if (res.status == 200) {
+					if (res.data != null) {
+						localStorage.setItem("user", JSON.stringify(res.data));
+
+						history.push("/home");
+					}
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	return (
 		<div id="login">
 			<br />

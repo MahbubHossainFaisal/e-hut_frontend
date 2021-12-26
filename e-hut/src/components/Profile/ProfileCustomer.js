@@ -7,43 +7,57 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 const Profile = () => {
-	var [customer, setCustomer] = useState({
-		CustomerId: "",
-		Name: "",
-		Address: "",
-		Phone: "",
-		Email: "",
-		Gender: "",
-		Image: "",
-		Occupation: "",
-		NumberOfFamilyMemberAdult: "",
-		NumberOfFamilyMemberChild: "",
-		NumberOfDeliveryGrocery: "",
-		NumberOfDeliveryVegetable: "",
-		DeliveryDay: "",
-		DeliveryTime: "",
-	});
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 
-	var {
-		CustomerId,
-		Name,
-		Address,
-		Phone,
-		Email,
-		Gender,
-		Image,
-		Occupation,
-		NumberOfFamilyMemberAdult,
-		NumberOfFamilyMemberChild,
-		NumberOfDeliveryGrocery,
-		NumberOfDeliveryVegetable,
-		DeliveryDay,
-		DeliveryTime,
-	} = customer;
+		console.log("working");
+		await axios
+			.post("https://localhost:44390/api/customers", {
+				CustomerId: customerId,
+				Name: name,
+				Phone: phone,
+				Email: email,
+				Address: address,
+				Email: email,
+				Image: image,
+				Gender: gender,
+				Password: password,
+				Occupation: occupation,
+				NumberOfFamilyMemberAdult: numberOfFamilyMemberAdult,
+				NumberOfFamilyMemberChild: numberOfFamilyMemberChild,
+				NumberOfDeliveryGrocery: numberOfDeliveryGrocery,
+				NumberOfDeliveryVegetable: numberOfDeliveryVegetable,
+				DeliveryDay: deliveryDay,
+				DeliveryTime: deliveryTime,
+			})
+			.then((res) => {
+				console.log(res.Status);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 
-	var onInputChange = (e) => {
-		setCustomer({ ...customer, [e.target.name]: [e.target.value] });
+		console.log("done");
 	};
+
+	const [customerId, setCustomerId] = useState("");
+	const [phone, setPhone] = useState("");
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [address, setAddress] = useState("");
+	const [image, setImage] = useState("");
+	const [gender, setGender] = useState("");
+	const [password, setPassword] = useState("");
+	const [occupation, setOccupation] = useState("");
+	const [numberOfFamilyMemberAdult, setNumberOfFamilyMemberAdult] =
+		useState("");
+	const [numberOfFamilyMemberChild, setNumberOfFamilyMemberChild] =
+		useState("");
+	const [numberOfDeliveryGrocery, setNumberOfDeliveryGrocery] = useState("");
+	const [numberOfDeliveryVegetable, setNumberOfDeliveryVegetable] =
+		useState("");
+	const [deliveryDay, setDeliveryDay] = useState("");
+	const [deliveryTime, setDeliveryTime] = useState("");
 
 	var user = localStorage.getItem("user");
 	if (user != null) {
@@ -51,8 +65,21 @@ const Profile = () => {
 		axios
 			.get("https://localhost:44390/api/customers/" + data.UserId)
 			.then((response) => {
-				Phone = "01324283";
-				console.log(customer);
+				setCustomerId(response.data.CustomerId);
+				setPhone(response.data.Phone);
+				setEmail(response.data.Email);
+				setName(response.data.Name);
+				setAddress(response.data.Address);
+				setImage(response.data.Image);
+				setGender(response.data.Gender);
+				setPassword(response.data.Password);
+				setNumberOfFamilyMemberAdult(response.data.NumberOffamilyMemberAdult);
+				setNumberOfFamilyMemberChild(response.data.NumberOffamilyMemberChild);
+				setNumberOfDeliveryGrocery(response.data.NumberOfDeliveryGrocery);
+				setNumberOfDeliveryVegetable(response.data.numberOfDeliveryVegetable);
+				setDeliveryTime(response.data.DeliveryTime);
+				setDeliveryDay(response.data.DeliveryDay);
+				//console.log(customerId);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -81,14 +108,15 @@ const Profile = () => {
 					</tr>
 				</table>
 				<hr></hr>
-				<Form>
+				<Form onSubmit={handleSubmit}>
 					<Row className="mb-3">
 						<Form.Group as={Col} controlId="name">
 							<Form.Label>Name</Form.Label>
 							<Form.Control
 								type="text"
-								name=""
-								onChange={(e) => onInputChange(e)}
+								name="name"
+								value={name}
+								onChange={(event) => setName(event.target.value)}
 							/>
 						</Form.Group>
 
@@ -96,8 +124,9 @@ const Profile = () => {
 							<Form.Label>Email</Form.Label>
 							<Form.Control
 								type="email"
-								name=""
-								onChange={(e) => onInputChange(e)}
+								name="email"
+								value={email}
+								onChange={setEmail}
 							/>
 						</Form.Group>
 					</Row>
@@ -106,8 +135,9 @@ const Profile = () => {
 							<Form.Label>Phone</Form.Label>
 							<Form.Control
 								type="text"
-								name=""
-								onChange={(e) => onInputChange(e)}
+								name="phone"
+								value={phone}
+								onChange={setPhone}
 							/>
 						</Form.Group>
 
@@ -120,8 +150,9 @@ const Profile = () => {
 						<Form.Label>Address</Form.Label>
 						<Form.Control
 							placeholder=""
-							name=""
-							onChange={(e) => onInputChange(e)}
+							name="address"
+							value={address}
+							onChange={(event) => setAddress(event.target.value)}
 						/>
 					</Form.Group>
 					<div>
