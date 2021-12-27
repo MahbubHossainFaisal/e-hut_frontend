@@ -1,9 +1,13 @@
-import "./Login.css";
 import axios from "axios";
-import React, { Component } from "react";
-import { Form } from "react-bootstrap";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import "./Login.css";
 
-let uname, pass;
+
+
+const Login = () => {
+
+  let uname, pass;
 const setusername = (event) => {
   uname = event.target.value;
 };
@@ -11,6 +15,8 @@ const setusername = (event) => {
 const setPassword = (event) => {
   pass = event.target.value;
 };
+
+const history = useHistory()
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -21,13 +27,15 @@ const handleSubmit = async (e) => {
     })
     .then((res) => {
       console.log(res.status);
+      history.push('/')
+      
     })
     .catch((err) => {
       console.log(err);
     });
 };
 
-const Login = () => {
+
   return (
     <div id="login">
       <br />
