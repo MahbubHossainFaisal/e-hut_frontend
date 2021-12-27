@@ -5,27 +5,33 @@ import DeliverymenSignUp from "./components/Deliverymen/deliverymenSignUp";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Login from "./components/Login/Login";
+import Logout from "./components/Login/Logout";
 import AddProduct from "./components/Product/AddProduct";
 import ProductDetails from "./components/Product/ProductDetails";
 import Products from "./components/Product/Products";
 import ShopSignUp from "./components/Shops/shopSignUp";
 import SignUp from "./components/SignUp/SignUp";
 import Checkout from "./components/Checkout/checkout";
+import Profile from "./components/Profile/ProfileCustomer";
+import ProfileAdditional from "./components/Profile/ProfileCustomerAdditionalInfo";
 
 function App() {
 	return (
 		<React.Fragment>
 			<Header />
 			<Switch>
-				<Route exact path="/" component={Products} />
+				<Route exact path="/home" component={Products} />
 				<Route exact path="/signup" component={SignUp} />
 				<Route path="/signup/shop" component={ShopSignUp} />
 				<Route path="/login" component={Login} />
+				<Route path="/logout" component={Logout} />
 				<Route path="/products/:id" component={ProductDetails} exact />
 				<Route path="/product/add" component={AddProduct} />
 				<Route path="/signup/deliverymen" component={DeliverymenSignUp} />
 				<Route path="/cart" component={CartScreen} />
 				<Route path="/checkout" component={Checkout} />
+				<Route exact path="/user/profile" component={Profile} />
+				<Route exact path="/user/profile/info" component={ProfileAdditional} />
 			</Switch>
 			<Footer />
 		</React.Fragment>
