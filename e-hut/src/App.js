@@ -14,28 +14,32 @@ import SignUp from "./components/SignUp/SignUp";
 import Checkout from "./components/Checkout/checkout";
 import Profile from "./components/Profile/ProfileCustomer";
 import ProfileAdditional from "./components/Profile/ProfileCustomerAdditionalInfo";
+import ShopProfile from "./components/Profile/ShopProfile";
 
 function App() {
-	return (
-		<React.Fragment>
-			<Header />
-			<Switch>
-				<Route exact path="/home" component={Products} />
-				<Route exact path="/signup" component={SignUp} />
-				<Route path="/signup/shop" component={ShopSignUp} />
-				<Route path="/login" component={Login} />
-				<Route path="/logout" component={Logout} />
-				<Route path="/products/:id" component={ProductDetails} exact />
-				<Route path="/product/add" component={AddProduct} />
-				<Route path="/signup/deliverymen" component={DeliverymenSignUp} />
-				<Route path="/cart" component={CartScreen} />
-				<Route path="/checkout" component={Checkout} />
-				<Route exact path="/user/profile" component={Profile} />
-				<Route exact path="/user/profile/info" component={ProfileAdditional} />
-			</Switch>
-			<Footer />
-		</React.Fragment>
-	);
+
+  return (
+    <React.Fragment>
+      <Header />
+      <Switch>
+        <Route exact path="/home" component={Products} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route path="/signup/shop" component={ShopSignUp} />
+        <Route path="/login" component={Login} />
+        <Route path="/logout" component={Logout} />
+        <Route path="/products/:id" component={ProductDetails} exact />
+        <Route path="/product/add" component={AddProduct} />
+        <Route path="/signup/deliverymen" component={DeliverymenSignUp} />
+        <Route path="/cart" component={CartScreen} />
+        <Route path="/checkout" component={Checkout} />
+        <Route exact path="/user/profile" component={Profile} />
+        <Route exact path="/user/profile/info" component={ProfileAdditional} />
+        <Route exact path="/user/profile/shopProfile" component={ShopProfile} />
+      </Switch>
+      <Footer />
+    </React.Fragment>
+  );
+
 }
 
 export default App;
