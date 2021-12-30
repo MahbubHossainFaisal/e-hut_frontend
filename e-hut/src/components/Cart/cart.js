@@ -1,14 +1,16 @@
 import React, { useContext } from 'react'
 import { Button, Card, Col, Image, ListGroup, ListGroupItem, Row } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
+import Checkout from '../Checkout/checkout'
 import CartContext from '../store/cart-context'
 import classes from './cart.module.css'
 
 
-const CartScreen = ({match, location, history}) => {
+const CartScreen = () => {
    
     
     
-
+    const history = useHistory()
     const cartCtx = useContext(CartContext)
    // console.log(cartCtx.items)
    const totalAmount = cartCtx.totalAmount.toFixed(2)
@@ -31,6 +33,17 @@ const CartScreen = ({match, location, history}) => {
 
    const cartItemFullyRemoveHandler = id =>{
         cartCtx.removeItemFully(id)
+   }
+
+
+   const checkoutHandler = () =>{
+       let userID = JSON.parse(localStorage.getItem('user'));
+       //console.log(totalAmount)
+        userID = {...userID, subtotal: totalAmount ? totalAmount : 0, discount: 20,}
+       history.push({
+           pathname: '/checkout',
+           state: userID
+       })
    }
     return (
         <div className={classes.cart}>
@@ -83,7 +96,7 @@ const CartScreen = ({match, location, history}) => {
                          <h3>{totalAmount} BDT.</h3>
                         </ListGroupItem>
                         <ListGroupItem>
-                            <Button type='button' className='btn-block'
+                            <Button type='button' className='btn-block' onClick={checkoutHandler}
                             >Proceed to Checkout</Button>
                         </ListGroupItem>
                         </ListGroup>
