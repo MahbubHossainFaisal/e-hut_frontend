@@ -11,11 +11,13 @@ import ProductDetails from "./components/Product/ProductDetails";
 import Products from "./components/Product/Products";
 import ShopSignUp from "./components/Shops/shopSignUp";
 import SignUp from "./components/SignUp/SignUp";
+import Checkout from "./components/Checkout/checkout";
 import Profile from "./components/Profile/ProfileCustomer";
 import ProfileAdditional from "./components/Profile/ProfileCustomerAdditionalInfo";
 import ShopProfile from "./components/Profile/ShopProfile";
 
 function App() {
+
   return (
     <React.Fragment>
       <Header />
@@ -29,6 +31,7 @@ function App() {
         <Route path="/product/add" component={AddProduct} />
         <Route path="/signup/deliverymen" component={DeliverymenSignUp} />
         <Route path="/cart" component={CartScreen} />
+        <Route path="/checkout" component={Checkout} />
         <Route exact path="/user/profile" component={Profile} />
         <Route exact path="/user/profile/info" component={ProfileAdditional} />
         <Route exact path="/user/profile/shopProfile" component={ShopProfile} />
@@ -36,6 +39,7 @@ function App() {
       <Footer />
     </React.Fragment>
   );
+
 }
 
 export default App;

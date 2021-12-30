@@ -1,4 +1,3 @@
-import "./Login.css";
 import axios from "axios";
 import React, { Component } from "react";
 import { Redirect, useHistory } from "react-router-dom";
