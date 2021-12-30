@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 
 const Login = () => {
-  console.log(localStorage.getItem("user"));
   const history = useHistory();
   let uname, pass;
   const setusername = (event) => {

@@ -12,6 +12,7 @@ var isEvening = false;
 let sat, sun, mon, wed, tue, thu, fri;
 
 const AdditionalInfo = () => {
+  window.location.reload();
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("working");
