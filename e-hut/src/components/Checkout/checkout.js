@@ -1,8 +1,23 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { Badge, Card, Container, ListGroup, Button, ListGroupItem } from 'react-bootstrap'
 import classes from './checkout.module.css'
+import axios from 'axios'
 
-const Checkout = () => {
+const Checkout = (props) => {
+    const [customerName,setCustomerName] = useState('')
+    console.log(props.location.state.subtotal)
+    let date = new Date().toLocaleDateString();
+    const grandTotal = props.location.state.subtotal - props.location.state.discount;
+    useEffect(()=>{
+        const userID = props.location.state.UserId;
+        axios.get("https://localhost:44390/api/customers/" + userID)
+        .then((response)=>{
+            setCustomerName(response.data.Name)
+        })
+        .catch((err) => {
+			console.log(err);
+		});
+    })
     return (
         <Container className={`${classes.center} my-5`}>
             <Card style={{ width: '46rem' }} className='text-center bg-dark text-white'>
@@ -29,7 +44,7 @@ const Checkout = () => {
                     
                     </div>
                     <Badge bg="secondary">
-                    Mahbub Hossain Faisal
+                    {customerName}
                     </Badge>
                 </ListGroup.Item>
                 <ListGroup.Item
@@ -37,11 +52,11 @@ const Checkout = () => {
                     className="d-flex justify-content-between align-items-start"
                 >
                     <div className="ms-2 me-auto">
-                    <div className="fw-bold">Date</div>
+                    <div className="fw-bold">Order Date</div>
                     
                     </div>
                     <Badge bg="secondary">
-                     12/02/2021
+                     {date}
                     </Badge>
                 </ListGroup.Item>
                 <ListGroup.Item
@@ -53,7 +68,7 @@ const Checkout = () => {
                     
                     </div>
                     <Badge bg="secondary">
-                     200 BDT.
+                     {props.location.state.subtotal}
                     </Badge>
                 </ListGroup.Item>
                 <ListGroup.Item
@@ -65,7 +80,7 @@ const Checkout = () => {
                     
                     </div>
                     <Badge bg="secondary">
-                     50 BDT.
+                     {props.location.state.discount} BDT.
                     </Badge>
                 </ListGroup.Item>
                 <ListGroup.Item
@@ -77,35 +92,13 @@ const Checkout = () => {
                     
                     </div>
                     <Badge bg="secondary">
-                     150 BDT.
+                     {grandTotal} BDT.
                     </Badge>
                 </ListGroup.Item>
-                <ListGroup.Item
-                    as="li"
-                    className="d-flex justify-content-between align-items-start"
-                >
-                    <div className="ms-2 me-auto">
-                    <div className="fw-bold">Delivery Man</div>
-                    
-                    </div>
-                    <Badge bg="secondary">
-                     Alauddin Khan
-                    </Badge>
-                </ListGroup.Item>
-                <ListGroup.Item
-                    as="li"
-                    className="d-flex justify-content-between align-items-start"
-                >
-                    <div className="ms-2 me-auto">
-                    <div className="fw-bold">Delivery Status</div>
-                    
-                    </div>
-                    <Badge bg="secondary">
-                     On process
-                    </Badge>
-                </ListGroup.Item>
+                
+                
                 <ListGroup.Item>
-                    <Button variant='primary' className='mx-2'>
+                    <Button variant='primary' className='mx-2' disabled={grandTotal <= 0 ? true : false}>
                     Confirm
                     </Button>
                     <Button variant='primary' className='mx-2'>

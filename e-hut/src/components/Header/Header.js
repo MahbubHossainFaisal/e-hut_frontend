@@ -1,24 +1,25 @@
-import React, { useState, useContext, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { NavLink, useHistory } from "react-router-dom";
 import CartContext from "../store/cart-context";
-import { Redirect, useHistory } from "react-router-dom";
 const Header = () => {
   const history = useHistory();
   let data = "";
   let path = "";
 
-  const setPath = (event) => {
+  const setPath = (e) => {
     data = JSON.parse(localStorage.getItem("user"));
     console.log(data);
     if (data != null) {
       if (data.Role === "Customer") {
         path = "/user/profile";
+        console.log(path)
         history.push(path);
-        console.log(path);
+        
       } else if (data.Role === "Shop") {
         path = "/user/profile/shopProfile";
-        history.push(path);
         console.log(path);
+        history.push(path);
+        
       }
     }
   };
@@ -58,22 +59,28 @@ const Header = () => {
                 <span style={{ color: "yellow" }}>{numberOfCartItems}</span>
               </span>
             </NavLink>
+         
+            
             <input
               type="submit"
               name="submit"
-              class="btn btn-info btn-md"
-              style={{ textDecoration: "none", color: "white" }}
+              className="btn btn-primary btn-md mx-5"
+              style={{backgroundColor: "#21D192", textDecoration: "none", color: "white" }}
               value="User"
               onClick={setPath}
             />
-            {/* <NavLink
+            
+             {/**
+              <NavLink
               to={path}
               style={{ textDecoration: "none", color: "white" }}
+              
             >
               <span className="me-5 text-white">
                 <i className="fas fa-user"></i> User{" "}
               </span>
-            </NavLink> */}
+            </NavLink>
+              */}
             <span>
               <NavLink
                 to="/signup"
@@ -93,7 +100,7 @@ const Header = () => {
                 to="/logout"
                 style={{ textDecoration: "none", color: "white" }}
               >
-                Logout
+                /Logout
               </NavLink>
             </span>
           </div>
