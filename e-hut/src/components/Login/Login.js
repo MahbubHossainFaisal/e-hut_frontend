@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { Component } from "react";
-import { Redirect, useHistory } from "react-router-dom";
-
+import React,{useContext} from "react";
+import { useHistory } from "react-router-dom";
+import LoginContext from "../store/loginStatus-context";
 const Login = () => {
+  const loginCtx = useContext(LoginContext)
   const history = useHistory();
   let uname, pass;
   const setusername = (event) => {
@@ -21,11 +22,14 @@ const Login = () => {
         Password: pass,
       })
       .then((res) => {
-        if (res.status == 200) {
-          if (res.data != null) {
+        if (res.status === 200) {
+          if (res.data !== null) {
             localStorage.setItem("user", JSON.stringify(res.data));
-
-            history.push("/home");
+            loginCtx.changeLogin(true)
+            history.push({
+              pathname: '/home',
+              state: true
+            })
           }
         }
       })
