@@ -11,7 +11,20 @@ const ShopProfile = () => {
     e.preventDefault();
     console.log("working");
     await axios
-      .put("https://localhost:44390/api/shops/" + ShopId, {})
+      .put("https://localhost:44390/api/shops/" + ShopId, {
+        ShopId: ShopId,
+        Name: shopName,
+        ShopManager: sManagerName,
+        Address: Address,
+        Phone: Phone,
+        Email: Email,
+        BankInformationId: BInfoId,
+        Status: Status,
+        Rating: Rating,
+        TotalSold: TotalSold,
+        TotalRecievedPayment: TotalRecieved,
+        Password: Password,
+      })
       .then((res) => {
         console.log(res.status);
       })
@@ -41,6 +54,7 @@ const ShopProfile = () => {
       axios
         .get("https://localhost:44390/api/shops/" + data.UserId)
         .then((response) => {
+          console.log(response.data);
           SetShopId(response.data.ShopId);
           SetsManagerName(response.data.ShopManager);
           SetShopName(response.data.Name);
@@ -110,7 +124,7 @@ const ShopProfile = () => {
                 type="email"
                 name="email"
                 value={Email}
-                onChange={(event) => SetEmail(event.target.value)}
+                disabled={true}
               />
             </Form.Group>
           </Row>
@@ -121,7 +135,7 @@ const ShopProfile = () => {
                 type="text"
                 name="phone"
                 value={Phone}
-                onChange={(event) => SetPhone(event.target.value)}
+                disabled={true}
               />
             </Form.Group>
 
