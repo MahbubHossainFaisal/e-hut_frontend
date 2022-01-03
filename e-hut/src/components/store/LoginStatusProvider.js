@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import LoginContext from './loginStatus-context'
 
 const LoginStatusProvider = (props) => {
-    const [login,setLogin] = useState()
+    let user = localStorage.getItem('user')
+
+    const [login,setLogin] = useState(user? true : false)
     const loginHandler = (val) =>{
         setLogin(val)
     }
