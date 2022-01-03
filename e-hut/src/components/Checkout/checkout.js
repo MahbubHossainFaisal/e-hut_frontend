@@ -1,11 +1,11 @@
-import React,{useState,useEffect} from 'react'
-import { Badge, Card, Container, ListGroup, Button, ListGroupItem } from 'react-bootstrap'
-import classes from './checkout.module.css'
 import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { Badge, Button, Card, Container, ListGroup } from 'react-bootstrap'
+import classes from './checkout.module.css'
 
 const Checkout = (props) => {
     const [customerName,setCustomerName] = useState('')
-    console.log(props.location.state.subtotal)
+   // console.log(props.location.state.subtotal)
     let date = new Date().toLocaleDateString();
     const grandTotal = props.location.state.subtotal - props.location.state.discount;
     useEffect(()=>{
