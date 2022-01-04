@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import CartScreen from "./components/Cart/cart";
+import Checkout from "./components/Checkout/checkout";
 import DeliverymenSignUp from "./components/Deliverymen/deliverymenSignUp";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
@@ -9,12 +10,10 @@ import Logout from "./components/Login/Logout";
 import AddProduct from "./components/Product/AddProduct";
 import ProductDetails from "./components/Product/ProductDetails";
 import Products from "./components/Product/Products";
-import ShopSignUp from "./components/Shops/shopSignUp";
-import SignUp from "./components/SignUp/SignUp";
-import Checkout from "./components/Checkout/checkout";
 import Profile from "./components/Profile/ProfileCustomer";
 import ProfileAdditional from "./components/Profile/ProfileCustomerAdditionalInfo";
 import ShopProfile from "./components/Profile/ShopProfile";
+<<<<<<< HEAD
 import AdminProfile from "./components/Profile/ProfileAdmin";
 
 function App() {
@@ -40,6 +39,37 @@ function App() {
 			<Footer />
 		</React.Fragment>
 	);
+=======
+import ShopSignUp from "./components/Shops/shopSignUp";
+import SignUp from "./components/SignUp/SignUp";
+
+
+function App() {
+ 
+  return (
+    <React.Fragment>
+      <Header />
+      <Switch>
+        <Route path="/home"  component={Products}/>
+        <Route exact path="/signup" component={SignUp} />
+        <Route path="/signup/shop" component={ShopSignUp} />
+        <Route path="/login" component={Login} />
+        <Route path="/logout" component={Logout} />
+        <Route path="/products/:id" component={ProductDetails} exact />
+        <Route path="/product/add" component={AddProduct} />
+        <Route path="/signup/deliverymen" component={DeliverymenSignUp} />
+        <Route path="/cart" component={CartScreen} />
+        <Route path="/checkout" component={Checkout} />
+        <Route exact path="/user/profile" component={Profile} />
+        <Route exact path="/user/profile/info" component={ProfileAdditional} />
+        <Route exact path="/user/profile/shopProfile" component={ShopProfile} />
+        <Route path='*' component={Products} />
+      </Switch>
+      <Footer />
+    </React.Fragment>
+  );
+
+>>>>>>> d2bd0a7a6360f43b814aa51cdb05a5b64ccb6dd6
 }
 
 export default App;

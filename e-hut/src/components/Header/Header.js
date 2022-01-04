@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import CartContext from "../store/cart-context";
+<<<<<<< HEAD
 const Header = () => {
 	const history = useHistory();
 	let data = "";
@@ -29,6 +30,41 @@ const Header = () => {
 	const [searchProduct, setSearchProduct] = useState("");
 	//using cartContext
 	const cartCtx = useContext(CartContext);
+=======
+import LoginContext from "../store/loginStatus-context";
+const Header = (props) => {
+  const loginCtx = useContext(LoginContext)
+  const history = useHistory();
+  let data = "";
+  let path = "";
+
+
+  const setPath = (e) => {
+    data = JSON.parse(localStorage.getItem("user"));
+    
+    console.log(data);
+    
+    if (data !== null) {
+     
+      if (data.Role === "Customer") {
+        path = "/user/profile";
+        console.log(path)
+        history.push(path);
+        
+      } else if (data.Role === "Shop") {
+        path = "/user/profile/shopProfile";
+        console.log(path);
+        history.push(path);
+        
+      }
+    }
+  };
+
+  
+  const [searchProduct, setSearchProduct] = useState("");
+  //using cartContext
+  const cartCtx = useContext(CartContext);
+>>>>>>> d2bd0a7a6360f43b814aa51cdb05a5b64ccb6dd6
 
 	const numberOfCartItems = cartCtx.items.reduce((currNumber, item) => {
 		return currNumber + item.amount;
@@ -86,6 +122,7 @@ const Header = () => {
               </span>
             </NavLink>
               */}
+<<<<<<< HEAD
 						<span>
 							<NavLink
 								to="/signup"
@@ -113,6 +150,34 @@ const Header = () => {
 			</nav>
 		</React.Fragment>
 	);
+=======
+            <span>
+              <NavLink
+                to="/signup"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Sign Up
+              </NavLink>
+              <span style={{ color: "white" }}> or </span>
+              {loginCtx.loginStatus ? (<NavLink
+                to="/logout"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Logout
+              </NavLink>) : 
+              (<NavLink
+                to="/login"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Login
+              </NavLink>)}
+            </span>
+          </div>
+        </div>
+      </nav>
+    </React.Fragment>
+  );
+>>>>>>> d2bd0a7a6360f43b814aa51cdb05a5b64ccb6dd6
 };
 
 export default Header;

@@ -1,14 +1,14 @@
-import React, { useContext } from 'react'
+import React, {useState, useContext } from 'react'
 import { Button, Card, Col, Image, ListGroup, ListGroupItem, Row } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
-import Checkout from '../Checkout/checkout'
+import Notification from '../Notification/Card'
 import CartContext from '../store/cart-context'
 import classes from './cart.module.css'
 
 
 const CartScreen = () => {
    
-    
+    const [customer,setCustomer] = useState(true)
     
     const history = useHistory()
     const cartCtx = useContext(CartContext)
@@ -38,12 +38,19 @@ const CartScreen = () => {
 
    const checkoutHandler = () =>{
        let userID = JSON.parse(localStorage.getItem('user'));
-       //console.log(totalAmount)
-        userID = {...userID, subtotal: totalAmount ? totalAmount : 0, discount: 20,}
-       history.push({
-           pathname: '/checkout',
-           state: userID
-       })
+       console.log(userID)
+       if(userID === null || userID.Role !== 'Customer'){
+           
+           // console.log('HI')
+           setCustomer(false)
+       }
+        else{
+            userID = {...userID, subtotal: totalAmount ? totalAmount : 0, discount: 20,}
+            history.push({
+            pathname: '/checkout',
+            state: userID
+            })
+        }
    }
     return (
         <div className={classes.cart}>
@@ -89,7 +96,8 @@ const CartScreen = () => {
             ) }
             </Col>
             <Col md={4} className='py-5 my-2'>
-                <Card>
+                {customer &&(
+                    <Card>
                     <ListGroup variant='flush'>
                         <ListGroupItem>
                          <h2> Subtotal  items </h2>
@@ -100,9 +108,12 @@ const CartScreen = () => {
                             >Proceed to Checkout</Button>
                         </ListGroupItem>
                         </ListGroup>
-                </Card>
+                    </Card>
+                )}
+                {!customer && <Notification  title='Notification' text='Please Login As a Customer'/>}
              </Col>
         </Row>
+        
         </div>
     )
 }
