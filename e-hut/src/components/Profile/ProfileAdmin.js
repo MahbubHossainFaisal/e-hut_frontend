@@ -33,21 +33,6 @@ const ProfileAdmin = () => {
 				}
 			)
 			.then((res) => {
-				console.log(
-					adminId +
-						" " +
-						name +
-						" " +
-						phone +
-						" " +
-						email +
-						" " +
-						image +
-						" " +
-						gender +
-						" " +
-						password
-				);
 				console.log(res.status);
 			})
 			.catch((error) => {
