@@ -9,7 +9,7 @@ const Header = (props) => {
   let path = "";
   let pathHome = "";
 
-  const setPath = (e) => {
+  const setPathProfile = (e) => {
     data = JSON.parse(localStorage.getItem("user"));
 
     console.log(data);
@@ -17,13 +17,28 @@ const Header = (props) => {
     if (data !== null) {
       if (data.Role === "Customer") {
         path = "/user/profile";
-        pathHome = "/home";
         history.push(path);
-        history.push(pathHome);
       } else if (data.Role === "Shop") {
         path = "/user/profile/shopProfile";
-        pathHome = "/shop/dashboard";
         history.push(path);
+      } else if (data.Role === "Admin") {
+        path = "/user/profile/admin";
+        history.push(path);
+      }
+    }
+  };
+
+  const setPathHome = (e) => {
+    data = JSON.parse(localStorage.getItem("user"));
+
+    console.log(data);
+
+    if (data !== null) {
+      if (data.Role === "Customer") {
+        pathHome = "/home";
+        history.push(pathHome);
+      } else if (data.Role === "Shop") {
+        pathHome = "/shop/dashboard";
         history.push(pathHome);
       } else if (data.Role === "Admin") {
         path = "/user/profile/admin";
@@ -61,7 +76,7 @@ const Header = (props) => {
               color: "white",
             }}
             value="E-HUT"
-            onClick={setPath}
+            onClick={setPathHome}
           />
           {/* <NavLink
             to={(onClick = { setPath })}
@@ -93,7 +108,7 @@ const Header = (props) => {
                 color: "white",
               }}
               value="User"
-              onClick={setPath}
+              onClick={setPathProfile}
             />
 
             {/**
