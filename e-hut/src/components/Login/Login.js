@@ -1,9 +1,9 @@
 import axios from "axios";
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import LoginContext from "../store/loginStatus-context";
 const Login = () => {
-  const loginCtx = useContext(LoginContext)
+  const loginCtx = useContext(LoginContext);
   const history = useHistory();
   let uname, pass;
   const setusername = (event) => {
@@ -24,12 +24,21 @@ const Login = () => {
       .then((res) => {
         if (res.status === 200) {
           if (res.data !== null) {
-            localStorage.setItem("user", JSON.stringify(res.data));
-            loginCtx.changeLogin(true)
-            history.push({
-              pathname: '/home',
-              state: true
-            })
+            if (res.data.Role == "Customer") {
+              localStorage.setItem("user", JSON.stringify(res.data));
+              loginCtx.changeLogin(true);
+              history.push({
+                pathname: "/home",
+                state: true,
+              });
+            } else if (res.data.Role == "Shop") {
+              localStorage.setItem("user", JSON.stringify(res.data));
+              loginCtx.changeLogin(true);
+              history.push({
+                pathname: "/shop/dashboard",
+                state: true,
+              });
+            }
           }
         }
       })
