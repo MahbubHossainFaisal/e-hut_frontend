@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import reactDom from "react-dom";
 import CreateProductShop from "../Product/CreateProduct";
+import Dashboard from "../Shops/Dashboard";
 import "./ShopDashboard.css";
 
 const ShopDashboard = (props) => {
@@ -18,6 +19,7 @@ const ShopDashboard = (props) => {
           color: "white",
         }}
         value="DashBoard"
+        onClick={OnClickDashboard}
       />
       <input
         type="submit"
@@ -47,15 +49,23 @@ const ShopDashboard = (props) => {
       <div class="cProduct">
         <CreateProductShop></CreateProductShop>
       </div>
+      <br />
+      <div class="dBoard">
+        <Dashboard></Dashboard>
+      </div>
+      <br />
     </React.Fragment>
   );
 };
-const CreateProduct = (e) => {
-  document.querySelector(".cProduct").style.display = "block";
-};
-
-const AddProductDistribution = (e) => {
+const OnClickDashboard = (e) => {
+  document.querySelector(".dBoard").style.display = "block";
   document.querySelector(".cProduct").style.display = "none";
 };
+const CreateProduct = (e) => {
+  document.querySelector(".cProduct").style.display = "block";
+  document.querySelector(".dBoard").style.display = "none";
+};
+
+const AddProductDistribution = (e) => {};
 
 export default ShopDashboard;

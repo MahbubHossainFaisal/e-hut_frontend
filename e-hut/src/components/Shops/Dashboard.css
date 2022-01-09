@@ -1,0 +1,19 @@
+.shadow-box-example {
+  height: 200px;
+  width: 200px;
+  margin-left: 15px;
+  background-color: #64b5f6;
+}
+#tOrderText {
+  text-align: center;
+  font-size: large;
+}
+#tOrderCount {
+  text-align: center;
+  font-size: large;
+}
+.DashboardComp {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
+}
