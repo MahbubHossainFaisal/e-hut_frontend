@@ -1,6 +1,6 @@
 .shadow-box-example {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
   margin-left: 15px;
   background-color: #64b5f6;
 }
@@ -16,4 +16,16 @@
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
+}
+
+.main_content {
+  width: 60%;
+  margin-bottom: 30%;
+  margin-left: 20%;
+  margin-right: 20%;
+  display: none;
+}
+
+#penBtn {
+  margin-left: 40px;
 }
