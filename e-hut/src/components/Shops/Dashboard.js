@@ -24,7 +24,7 @@ const ShopDashboard = (props) => {
 	}, []);
 
 	const OnClickPendingOrder = (e) => {
-		document.querySelector(".Shop_Content").style.display = "block";
+		document.querySelector(".ShopContent").style.display = "block";
 	};
 
 	return (
@@ -53,7 +53,7 @@ const ShopDashboard = (props) => {
 			</div>
 			<br />
 			<br />
-			<div className="Shop_Content">
+			<div className="ShopContent">
 				<table className="table">
 					<tr>
 						<th>Product Id</th>

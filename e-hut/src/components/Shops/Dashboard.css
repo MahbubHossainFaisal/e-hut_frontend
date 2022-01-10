@@ -18,7 +18,7 @@
 	grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
 }
 
-.Shop_Content {
+.ShopContent {
 	width: 60%;
 	margin-bottom: 30%;
 	margin-left: 20%;
