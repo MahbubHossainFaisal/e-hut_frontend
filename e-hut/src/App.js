@@ -20,6 +20,8 @@ import ShopDash from "./components/Shops/ShopDashboard";
 import AdminDashBoard from "./components/AdminDashboard/dashboard";
 import AdminList from "./components/AdminDashboard/Admin/adminList";
 import CustomerList from "./components/AdminDashboard/Customer/customerList";
+import DeliverymenList from "./components/AdminDashboard/Deliveryman/deliveryman";
+import ShopList from "./components/AdminDashboard/Shop/shopList";
 
 function App() {
 	return (
@@ -44,6 +46,8 @@ function App() {
 				<Route exact path="/user/profile/admin" component={AdminProfile} />
 				<Route exact path="/admin/list" component={AdminList} />
 				<Route exact path="/customer/list" component={CustomerList} />
+				<Route exact path="/deliveryman/list" component={DeliverymenList} />
+				<Route exact path="/shop/list" component={ShopList} />
 				<Route path="*" component={Products} />
 			</Switch>
 			<Footer />

@@ -18,10 +18,14 @@ const Dashboard = () => {
 							</a>
 						</td>
 						<td>
-							<button className="btn btn-primary btn-sm">Deliver Man</button>
+							<a className="btn btn-primary btn-sm" href="/deliveryman/list">
+								Deliver Man
+							</a>
 						</td>
 						<td>
-							<button className="btn btn-primary btn-sm">Shops</button>
+							<a className="btn btn-primary btn-sm" href="/shop/list">
+								Shops
+							</a>
 						</td>
 						<td>
 							<button className="btn btn-primary btn-sm">Register Admin</button>

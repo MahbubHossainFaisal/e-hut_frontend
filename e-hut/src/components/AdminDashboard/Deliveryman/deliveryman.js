@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./shopList.css";
+import "./deliveryman.css";
 import Dashboard from "../dashboard";
 
 const ShopList = () => {
 	var data = JSON.parse(localStorage.getItem("user"));
 	var cred = data.Phone + ":" + data.Password;
-	const [shops, setShops] = useState([]);
+	const [deliveryman, setDeliveryman] = useState([]);
 	//console.log(admin);
 	useEffect(() => {
 		axios
-			.get("https://localhost:44390/api/Shops", {
+			.get("https://localhost:44390/api/Deliverymen", {
 				headers: {
 					Authorization: "Basic " + btoa(cred),
 				},
 			})
 			.then((response) => {
-				setShops(response.data);
+				setDeliveryman(response.data);
 				//console.log(response.data);
 				//console.log(admin);
 			})
@@ -36,20 +36,20 @@ const ShopList = () => {
 						<th>Address</th>
 						<th>Phone</th>
 						<th>Email</th>
-						<th>ShopManager</th>
-						<th>Sells</th>
+						<th>NID</th>
+						<th>Rating</th>
 						<th>Action</th>
 					</tr>
 
-					{shops.map((item) => (
+					{deliveryman.map((item) => (
 						<tr>
-							<td>{item.ShopId}</td>
+							<td>{item.DeliveryManId}</td>
 							<td>{item.Name}</td>
 							<td>{item.Address}</td>
 							<td>{item.Phone}</td>
 							<td>{item.Email}</td>
-							<td>{item.ShopManager}</td>
-							<td>{item.TotalSold}</td>
+							<td>{item.Nid}</td>
+							<td>{item.Rating}</td>
 							<th>
 								<a className="btn btn-sm btn-primary">Details</a>
 							</th>
