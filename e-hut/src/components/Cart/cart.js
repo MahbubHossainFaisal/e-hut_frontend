@@ -1,23 +1,29 @@
-import React, {useState, useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Card, Col, Image, ListGroup, ListGroupItem, Row } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import Notification from '../Notification/Card'
 import CartContext from '../store/cart-context'
 import classes from './cart.module.css'
+import ShopList from './ShopList'
 
 
 const CartScreen = () => {
    
     const [customer,setCustomer] = useState(true)
+    let checker = false;
+    const[checkoutDetails,setCheckoutDetails] = useState([])
     
     const history = useHistory()
     const cartCtx = useContext(CartContext)
    // console.log(cartCtx.items)
-   const totalAmount = cartCtx.totalAmount.toFixed(2)
+   const totalAmount = cartCtx.totalAmount
+    //console.log(cartCtx.items)
+
    const cartItemAddHandler = (item) =>{
-        console.log(item)
+        console.log(item.shopsId)
         cartCtx.addItem({
             id: item.id,
+            shopsId: item.shopsId,
             image:'https://freepngimg.com/thumb/categories/291.png',
             name: item.name,
             amount: 1,
@@ -36,16 +42,41 @@ const CartScreen = () => {
    }
 
 
+   const selectedShopsHandler = (shops) =>{
+       let arr = checkoutDetails;
+       let flag = false;
+      
+          arr.map((item) =>{
+              
+              if(item.shopId === shops.shopId){
+                  flag = true;
+                  item.products = [...item.products,...shops.products]
+              }
+              
+          })
+      if(flag === true){
+          setCheckoutDetails(arr)
+      }
+      if(flag === false){
+          arr.push(shops)
+          setCheckoutDetails(arr)
+      }
+       
+   }
+
+  
+
+   //console.log(checkoutDetails)
    const checkoutHandler = () =>{
        let userID = JSON.parse(localStorage.getItem('user'));
-       console.log(userID)
+       //console.log(userID)
        if(userID === null || userID.Role !== 'Customer'){
            
            // console.log('HI')
            setCustomer(false)
        }
         else{
-            userID = {...userID, subtotal: totalAmount ? totalAmount : 0, discount: 20,}
+            userID = {...userID, subtotal: totalAmount ? totalAmount : 0, discount: 20, details: checkoutDetails}
             history.push({
             pathname: '/checkout',
             state: userID
@@ -96,7 +127,7 @@ const CartScreen = () => {
             ) }
             </Col>
             <Col md={4} className='py-5 my-2'>
-                {customer &&(
+                {customer && totalAmount!==0 &&(
                     <Card>
                     <ListGroup variant='flush'>
                         <ListGroupItem>
@@ -110,8 +141,23 @@ const CartScreen = () => {
                         </ListGroup>
                     </Card>
                 )}
-                {!customer && <Notification  title='Notification' text='Please Login As a Customer'/>}
+                {!customer && totalAmount==='0' && <Notification  title='Notification' text='Please Login As a Customer'/>}
              </Col>
+        </Row>
+        <Row>
+             <Col md={1}>
+
+             </Col>
+             
+             <Col md={11}>
+                 <h2>Select Shops</h2>
+             </Col>     
+        </Row>
+        <Row>
+            <Col md={1}>
+
+             </Col>
+           {cartCtx.items.map(item => item.shopsId.map(element => <ShopList  shopID={element} product={item.name} productId={item.id} productPrice={item.price} productAmount={item.amount}  selectedShop={selectedShopsHandler}/>) )}
         </Row>
         
         </div>
