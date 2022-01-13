@@ -79,6 +79,19 @@ const cartReducer = (state,action) =>{
         }
     }
 
+    if(action.type === 'REMOVESHOPS'){
+        let existingItems = state.items;
+        
+       let selectedItem= existingItems.filter(item => item.id === action.productId)
+        //console.log(selectedItem)
+        selectedItem[0].shopsId = [action.shopId]
+        //console.log(state.items)
+        return{
+            items: existingItems,
+            totalAmount: state.totalAmount
+        }
+    }
+
     return defaultCartState;
 }
 
@@ -97,12 +110,16 @@ const CartProvider = props =>{
     const removeItemFullyFromCartHandler = id =>{
         dispatchCartAction({type: 'REMOVEFULLY', id: id})
     }
+    const removeShopsHandler = (shopId,productId) =>{
+        dispatchCartAction({type: 'REMOVESHOPS', shopId: shopId, productId: productId})
+    }
     const cartContext = {
         items: cartState.items,
         totalAmount: cartState.totalAmount,
         addItem: addItemToCartHandler,
         removeItem: removeItemFromCartHandler,
-        removeItemFully: removeItemFullyFromCartHandler
+        removeItemFully: removeItemFullyFromCartHandler,
+        removeShops: removeShopsHandler
     }
     return <CartContext.Provider value={cartContext}>
         {props.children}
