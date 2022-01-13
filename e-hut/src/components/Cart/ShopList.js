@@ -76,7 +76,7 @@ const ShopList = (props) => {
             <Card.Text>
                 Product: <h6>{props.product}</h6>
             </Card.Text>
-            <Button variant='primary' className='btn-sm' onClick={selectShopHandler} >Select</Button>
+            <Button variant='primary' className='btn-sm' onClick={selectShopHandler} disabled={buttonColor? true: false}>{clicked}</Button>
         </Card.Body>
         </Card>
         
