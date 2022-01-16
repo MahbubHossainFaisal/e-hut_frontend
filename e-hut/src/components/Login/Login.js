@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import LoginContext from "../store/loginStatus-context";
-import userTypeContext from "../store/userTypeContext";
+
 const Login = () => {
 	const loginCtx = useContext(LoginContext);
-	const userTypeCtx = useContext(userTypeContext);
+
 	const history = useHistory();
 	let uname, pass;
 	const setusername = (event) => {
@@ -29,7 +29,6 @@ const Login = () => {
 						if (res.data.Role == "Customer") {
 							localStorage.setItem("user", JSON.stringify(res.data));
 							loginCtx.changeLogin(true);
-							userTypeCtx.adminRole(true);
 							history.push({
 								pathname: "/home",
 								state: true,
