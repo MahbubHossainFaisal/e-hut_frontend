@@ -1,3 +1,6 @@
 NavLink {
   text-decoration: none;
 }
+.viewCartBtn {
+  display: none;
+}

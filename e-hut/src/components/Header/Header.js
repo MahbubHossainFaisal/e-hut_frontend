@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import CartContext from "../store/cart-context";
 import LoginContext from "../store/loginStatus-context";
+import "./Header.css";
 const Header = (props) => {
   const loginCtx = useContext(LoginContext);
   const history = useHistory();
@@ -17,6 +18,7 @@ const Header = (props) => {
     if (data !== null) {
       if (data.Role === "Customer") {
         path = "/user/profile";
+        console.log("viewCart");
         history.push(path);
       } else if (data.Role === "Shop") {
         path = "/user/profile/shopProfile";
@@ -89,6 +91,7 @@ const Header = (props) => {
           </NavLink> */}
           <div>
             <NavLink
+              className="viewCartBtn"
               to={`/cart`}
               style={{ textDecoration: "none", color: "white" }}
             >

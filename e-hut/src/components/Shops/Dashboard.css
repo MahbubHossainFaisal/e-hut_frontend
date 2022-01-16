@@ -1,31 +1,47 @@
 .shadow-box-example {
-	height: 150px;
-	width: 150px;
-	margin-left: 15px;
-	background-color: #64b5f6;
+  height: 150px;
+  width: 150px;
+  margin-left: 15px;
+  background-color: #64b5f6;
 }
 #tOrderText {
-	text-align: center;
-	font-size: large;
+  text-align: center;
+  font-size: large;
 }
 #tOrderCount {
-	text-align: center;
-	font-size: large;
+  text-align: center;
+  font-size: large;
 }
 .DashboardComp {
-	display: grid;
-	grid-auto-flow: column;
-	grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
 }
 
-.ShopContent {
-	width: 60%;
-	margin-bottom: 30%;
-	margin-left: 20%;
-	margin-right: 20%;
-	display: none;
+.PendingOrderEl {
+  width: 60%;
+  margin-bottom: 30%;
+  margin-left: 20%;
+  margin-right: 20%;
+  display: none;
+}
+
+.ProcessingOrderEl {
+  width: 60%;
+  margin-bottom: 30%;
+  margin-left: 20%;
+  margin-right: 20%;
+  display: none;
+}
+
+.DeliverOrderOrderEl {
+  width: 60%;
+  margin-bottom: 30%;
+  margin-left: 20%;
+  margin-right: 20%;
+  display: none;
 }
 
 #penBtn {
-	margin-left: 40px;
+  margin-left: 40px;
 }
