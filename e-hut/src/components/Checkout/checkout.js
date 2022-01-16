@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Badge, Button, Card, Container, ListGroup } from 'react-bootstrap'
+import { Badge, Button, Card, Container, Form, ListGroup } from 'react-bootstrap'
 import classes from './checkout.module.css'
 
 const Checkout = (props) => {
@@ -8,6 +8,8 @@ const Checkout = (props) => {
    // console.log(props.location.state.subtotal)
     let date = new Date().toLocaleDateString();
     const grandTotal = props.location.state.subtotal - props.location.state.discount;
+
+    console.log(props.location.state.details);
     useEffect(()=>{
         const userID = props.location.state.UserId;
         axios.get("https://localhost:44390/api/customers/" + userID)
@@ -18,8 +20,28 @@ const Checkout = (props) => {
 			console.log(err);
 		});
     })
+
+
+    const orderHandler = async(e) =>{
+        e.preventDefault();
+        console.log('Entered in orderhandler')
+        const userID = props.location.state.UserId;
+       await axios
+       .post("https://localhost:44390/api/Orders", {
+        
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          console.log('SUccessfull confirmation')
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
     return (
-        <Container className={`${classes.center} my-5`}>
+        <Form onSubmit={orderHandler}>
+            <Container className={`${classes.center} my-5`}>
             <Card style={{ width: '46rem' }} className='text-center bg-dark text-white'>
             <Card.Header>Checkout</Card.Header>
             <ListGroup as="ol" numbered>
@@ -98,9 +120,12 @@ const Checkout = (props) => {
                 
                 
                 <ListGroup.Item>
-                    <Button variant='primary' className='mx-2' disabled={grandTotal <= 0 ? true : false}>
-                    Confirm
-                    </Button>
+                    <input
+                    type="submit"
+                    name="submit"
+                    className="btn btn-primary btn-md "
+                    value="Confirm"
+                  />
                     <Button variant='primary' className='mx-2'>
                     Cancel
                     </Button>
@@ -110,6 +135,7 @@ const Checkout = (props) => {
 
             </Card>
         </Container>
+        </Form>
     )
 }
 
