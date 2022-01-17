@@ -8,6 +8,11 @@ const ProvideRating = (props) => {
 	const [order, setOrder] = useState([]);
 	const [comment, setComment] = useState("");
 	const [rating, setRating] = useState(1);
+
+	const current = new Date();
+	const date = `${current.getDate()}/${
+		current.getMonth() + 1
+	}/${current.getFullYear()}`;
 	//console.log(props.id);
 
 	const UpdateRating = (e) => {
@@ -17,14 +22,33 @@ const ProvideRating = (props) => {
 		setComment(e.target.value);
 	};
 
+	const SubmitHandler = () => {
+		console.log("hitting");
+		axios
+			.post("https://localhost:44390/api/ShopReviews", {
+				ShopId: data.ShopId,
+				CustomerId: data.CustomerId,
+				Date: date,
+				Ratting: rating,
+				Comment: comment,
+				ProductId: data.ProductId,
+			})
+			.then((res) => {
+				console.log(res.status);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	useEffect(() => {
 		axios
 			.get("https://localhost:44390/api/SalesRecords/" + props.id)
 			.then((response) => {
 				setData(response.data);
 				setOrder(response.data.Order);
-				console.log(props.id);
-				console.log(response.data.Order.GrandTotal);
+				//console.log(props.id);
+				//console.log(response.data.Order.GrandTotal);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -71,7 +95,12 @@ const ProvideRating = (props) => {
 					</table>
 				</div>
 				<div>
-					<button className="btn btn-sm btn-primary m-1">Submit</button>
+					<button
+						className="btn btn-sm btn-primary m-1"
+						onClick={SubmitHandler}
+					>
+						Submit
+					</button>
 					<button className="btn btn-sm btn-danger ">Cancel</button>
 				</div>
 			</div>

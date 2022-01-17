@@ -12,7 +12,7 @@ const OrderHistory = (props) => {
 			.get(
 				"https://localhost:44390/api/Customers/GetRecordsByStatus/" +
 					data.UserId +
-					"/Deliverd"
+					"/Delivered"
 			)
 			.then((response) => {
 				setorderData(response.data);
