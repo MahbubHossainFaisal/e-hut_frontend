@@ -213,7 +213,7 @@ const ShopDashboard = (props) => {
 
         <div className="shadow-box-example z-depth-5">
           <p id="tOrderText">Delivered</p>
-          <p id="tOrderCount">2</p>
+          <p id="tOrderCount">{countDeliverOrder}</p>
           <button
             id="penBtn"
             type="button"
