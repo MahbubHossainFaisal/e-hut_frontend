@@ -2,9 +2,10 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import reactDom from "react-dom";
 import "./Dashboard.css";
+import StarRatingComponent from "react-star-rating-component";
 
 const ShopDashboard = (props) => {
-  var data = JSON.parse(localStorage.getItem("user"));
+  var user = JSON.parse(localStorage.getItem("user"));
   const [countPendingOrder, setCountPendingOrder] = useState(0);
   const [pendingProduct, setPendingProduct] = useState([]);
   const [processingProduct, setProcessingProduct] = useState([]);
@@ -16,7 +17,7 @@ const ShopDashboard = (props) => {
     axios
       .get(
         "https://localhost:44390/api/SalesRecords/GetNonDeliveredRecords/" +
-          data.UserId
+          user.UserId
       )
       .then((response) => {
         setCountPendingOrder(response.data.length);
@@ -30,7 +31,7 @@ const ShopDashboard = (props) => {
     axios
       .get(
         "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
-          data.UserId +
+          user.UserId +
           "/" +
           "Accepted"
       )
@@ -46,7 +47,7 @@ const ShopDashboard = (props) => {
     axios
       .get(
         "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
-          data.UserId +
+          user.UserId +
           "/" +
           "Delivered"
       )
@@ -73,7 +74,7 @@ const ShopDashboard = (props) => {
         axios
           .get(
             "https://localhost:44390/api/SalesRecords/GetNonDeliveredRecords/" +
-              data.UserId
+              user.UserId
           )
           .then((response) => {
             setCountPendingOrder(response.data.length);
@@ -87,7 +88,7 @@ const ShopDashboard = (props) => {
         axios
           .get(
             "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
-              data.UserId +
+              user.UserId +
               "/" +
               "Accepted"
           )
@@ -119,7 +120,7 @@ const ShopDashboard = (props) => {
         axios
           .get(
             "https://localhost:44390/api/SalesRecords/GetNonDeliveredRecords/" +
-              data.UserId
+              user.UserId
           )
           .then((response) => {
             setCountPendingOrder(response.data.length);
@@ -147,7 +148,7 @@ const ShopDashboard = (props) => {
         axios
           .get(
             "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
-              data.UserId +
+              user.UserId +
               "/" +
               "Accepted"
           )
@@ -334,7 +335,7 @@ const ShopDashboard = (props) => {
                     color: "white",
                   }}
                   value="View Review"
-                  //onClick={AcceptOrder(item.SalesRecordId)}
+                  //onClick={OnClickViewReview()}
                 />
               </th>
             </tr>
