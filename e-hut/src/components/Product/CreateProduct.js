@@ -1,9 +1,11 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import reactDom from "react-dom";
 import "./AddProduct.css";
 
 const AddProduct = (props) => {
+  const [Categories, setCategories] = useState([]);
+  const [Brands, setBrands] = useState([]);
   const [product, setProduct] = useState({
     Name: "",
     BrandId: "",
@@ -22,6 +24,8 @@ const AddProduct = (props) => {
   };
 
   const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log(product);
     await axios
       .post("https://localhost:44390/api/products", {
         Name: product.Name[0],
@@ -40,6 +44,28 @@ const AddProduct = (props) => {
       });
     e.preventDefault();
   };
+
+  useEffect(() => {
+    axios
+      .get("https://localhost:44390/api/Categories")
+      .then((response) => {
+        setCategories(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get("https://localhost:44390/api/Brands")
+      .then((response) => {
+        setBrands(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <React.Fragment>
@@ -64,12 +90,11 @@ const AddProduct = (props) => {
               className="form-select form-select-lg mb-3 "
               onChange={(e) => onInputChange(e)}
             >
-              <option className="" value="1">
-                Apex
-              </option>
-              <option className="" value="1">
-                Teer
-              </option>
+              {Brands.map((item) => (
+                <option className="" value={item.BrandId}>
+                  {item.Name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -80,8 +105,11 @@ const AddProduct = (props) => {
               className="form-select form-select-lg mb-3"
               onChange={(e) => onInputChange(e)}
             >
-              <option value="1">Vegetable</option>
-              <option value="1">oil</option>
+              {Categories.map((item) => (
+                <option className="" value={item.CategoryId}>
+                  {item.Name}
+                </option>
+              ))}
             </select>
           </div>
 
