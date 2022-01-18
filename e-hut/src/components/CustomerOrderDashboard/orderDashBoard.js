@@ -16,6 +16,7 @@ const OrderDashboard = () => {
 		setShowProvideRating(false);
 	};
 	let OrderHistoryClick = () => {
+		console.log("hjhsjda");
 		setShowOrder(false);
 		setShowHistory(true);
 		setShowProvideRating(false);
@@ -54,7 +55,9 @@ const OrderDashboard = () => {
 				</table>
 				{showOrder && <PlacedOrder />}
 				{showHistory && <OrderHistory handlerFunc={ProvideRatingHandler} />}
-				{showProvideRating && <Rating id={itemData} />}
+				{showProvideRating && (
+					<Rating id={itemData} historyHandler={OrderHistoryClick} />
+				)}
 			</div>
 		</React.Fragment>
 	);

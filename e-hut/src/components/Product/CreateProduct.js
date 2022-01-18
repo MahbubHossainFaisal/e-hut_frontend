@@ -101,9 +101,6 @@ const AddProduct = (props) => {
 			});
 	}, []);
 
-	console.log(formErrors);
-	console.log(formErrors.length);
-
 	return (
 		<React.Fragment>
 			<br />

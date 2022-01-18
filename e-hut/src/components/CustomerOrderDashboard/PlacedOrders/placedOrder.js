@@ -7,6 +7,22 @@ const PlacedOrder = () => {
 	const [orderData, setorderData] = useState([]);
 	const [datasize, setDatasize] = useState(0);
 
+	let CancelOrder = (e) => {
+		let sId = e.currentTarget.getAttribute("id");
+		axios
+			.post("https://localhost:44390/api/Shops/ProductOrderAcceptance", {
+				SalesRecordId: sId,
+				status: "Canceled",
+			})
+			.then((res) => {
+				console.log(res.status);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+		console.log(sId);
+	};
+
 	useEffect(() => {
 		axios
 			.get(
@@ -21,8 +37,6 @@ const PlacedOrder = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-
-		///////////////////
 	}, []);
 
 	return (
@@ -62,6 +76,8 @@ const PlacedOrder = () => {
 								<button
 									className="btn-danger btn btn-sm"
 									style={{ color: "black" }}
+									onClick={CancelOrder}
+									id={item.SalesRecordId}
 								>
 									Cancel Order
 								</button>

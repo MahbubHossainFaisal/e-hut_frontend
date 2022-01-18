@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./ProvideRating.css";
 import StarRatingComponent from "react-star-rating-component";
+import OrderHistory from "../OrderHistory/orderHistory";
 
 const ProvideRating = (props) => {
 	const [data, setData] = useState([]);
@@ -22,7 +23,7 @@ const ProvideRating = (props) => {
 		setComment(e.target.value);
 	};
 
-	const SubmitHandler = () => {
+	function SubmitHandler() {
 		console.log("hitting");
 		axios
 			.post("https://localhost:44390/api/ShopReviews", {
@@ -34,12 +35,14 @@ const ProvideRating = (props) => {
 				ProductId: data.ProductId,
 			})
 			.then((res) => {
-				console.log(res.status);
+				//console.log(res.status);
+				alert("Your feedback submitted.");
+				props.historyHandler();
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-	};
+	}
 
 	useEffect(() => {
 		axios
@@ -47,8 +50,6 @@ const ProvideRating = (props) => {
 			.then((response) => {
 				setData(response.data);
 				setOrder(response.data.Order);
-				//console.log(props.id);
-				//console.log(response.data.Order.GrandTotal);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -101,7 +102,13 @@ const ProvideRating = (props) => {
 					>
 						Submit
 					</button>
-					<button className="btn btn-sm btn-danger ">Cancel</button>
+
+					<button
+						className="btn btn-sm btn-danger "
+						onClick={props.historyHandler}
+					>
+						Cancel
+					</button>
 				</div>
 			</div>
 		</React.Fragment>
