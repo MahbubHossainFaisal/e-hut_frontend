@@ -44,18 +44,6 @@ const ShopDashboard = (props) => {
             textDecoration: "none",
             color: "white",
           }}
-          value="Add Product"
-          onClick={AddProductDistribution}
-        />
-        <input
-          type="submit"
-          name="submit"
-          className="btn btn-primary btn-md mx-5"
-          style={{
-            backgroundColor: "#21D192",
-            textDecoration: "none",
-            color: "white",
-          }}
           value="Sales Report"
           onClick={OnClickSalesReport}
         />

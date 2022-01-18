@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import reactDom from "react-dom";
 import "./Dashboard.css";
+import ViewReview from "./ViewReview";
 import StarRatingComponent from "react-star-rating-component";
-
 const ShopDashboard = (props) => {
   var user = JSON.parse(localStorage.getItem("user"));
   const [countPendingOrder, setCountPendingOrder] = useState(0);
@@ -46,15 +46,16 @@ const ShopDashboard = (props) => {
 
     axios
       .get(
-        "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
-          user.UserId +
-          "/" +
-          "Delivered"
+        "https://localhost:44390/api/ShopReviews/GetDeliveredProductsReview/" +
+          user.UserId
       )
       .then((response) => {
         setCountDeliverOrder(response.data.length);
         setDeliverProduct(response.data);
         console.log(response.data);
+        ////////////////////////////
+
+        ///////////////////////////
       })
       .catch((err) => {
         console.log(err);
@@ -184,6 +185,8 @@ const ShopDashboard = (props) => {
     document.querySelector(".DeliverOrderOrderEl").style.display = "none";
   };
 
+  const OnClickViewReview = (e) => {};
+
   return (
     <React.Fragment>
       <div className="DashboardComp">
@@ -223,11 +226,6 @@ const ShopDashboard = (props) => {
           >
             Details
           </button>
-        </div>
-
-        <div className="shadow-box-example z-depth-5">
-          <p id="tOrderText">Return Request</p>
-          <p id="tOrderCount">2</p>
         </div>
       </div>
       <br />
@@ -317,27 +315,26 @@ const ShopDashboard = (props) => {
             <th>Product Id</th>
             <th>Product Name</th>
             <th>Price</th>
+            <th>Review</th>
+            <th>Rating</th>
           </tr>
 
           {DeliverProduct.map((item) => (
             <tr>
-              <td>{item.Product.ProductId}</td>
-              <td>{item.Product.Name}</td>
-              <td>{item.Product.Price}</td>
-              <th>
-                <input
-                  type="submit"
-                  name="submit"
-                  className="btn btn-primary btn-md mx-5"
-                  style={{
-                    backgroundColor: "#21D192",
-                    textDecoration: "none",
-                    color: "white",
-                  }}
-                  value="View Review"
-                  //onClick={OnClickViewReview()}
+              <td>{item.ProductId}</td>
+              <td>{item.Name}</td>
+              <td>{item.Price}</td>
+
+              <td>
+                <textarea value={item.Comment} />
+              </td>
+              <td>
+                <StarRatingComponent
+                  name="rate"
+                  starCount={5}
+                  value={item.Ratting}
                 />
-              </th>
+              </td>
             </tr>
           ))}
         </table>

@@ -1,22 +1,44 @@
-import React from "react";
-import BarChart from "react-bar-chart";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { BarChart, Bar, CartesianGrid, XAxis, YAxis } from "recharts";
+import ReactExport from "react-export-excel";
+import "./salesReport.css";
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 const SalesReport = (props) => {
-  const data = [
-    { text: "Man", value: 500 },
-    { text: "Woman", value: 300 },
-  ];
-  const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+  const [SalesReportData, setSalesReportData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://localhost:44390/api/Shops/monthlySalesForYearReports/" + 2021
+      )
+      .then((response) => {
+        setSalesReportData(response.data);
+        console.log(SalesReportData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <React.Fragment>
-      <div style={{ width: "50%" }}>
-        <BarChart
-          ylabel="Quantity"
-          width={500}
-          height={500}
-          margin={margin}
-          data={data}
-          //onBarClick={this.handleBarClick}
-        />
+      <BarChart width={600} height={600} data={SalesReportData}>
+        <Bar dataKey="y" fill="green" />
+        <CartesianGrid stroke="#ccc" />
+        <XAxis dataKey="label" />
+        <YAxis dataKey="y" />
+      </BarChart>
+      <div className="EDBtn">
+        <ExcelFile>
+          <ExcelSheet data={SalesReportData} name="Employees">
+            <ExcelColumn label="Month" value="label" />
+            <ExcelColumn label="Sales" value="y" />
+          </ExcelSheet>
+        </ExcelFile>
       </div>
     </React.Fragment>
   );
