@@ -126,13 +126,6 @@ const Header = (props) => {
             </NavLink>
               */}
 						<span>
-							<NavLink
-								to="/signup"
-								style={{ textDecoration: "none", color: "white" }}
-							>
-								Sign Up
-							</NavLink>
-							<span style={{ color: "white" }}> or </span>
 							{loginCtx.loginStatus ? (
 								<NavLink
 									to="/logout"
@@ -141,12 +134,21 @@ const Header = (props) => {
 									Logout
 								</NavLink>
 							) : (
-								<NavLink
-									to="/login"
-									style={{ textDecoration: "none", color: "white" }}
-								>
-									Login
-								</NavLink>
+								<span>
+									<NavLink
+										to="/signup"
+										style={{ textDecoration: "none", color: "white" }}
+									>
+										Sign Up
+									</NavLink>
+									<span style={{ color: "white" }}> or </span>
+									<NavLink
+										to="/login"
+										style={{ textDecoration: "none", color: "white" }}
+									>
+										Login
+									</NavLink>
+								</span>
 							)}
 						</span>
 					</div>
