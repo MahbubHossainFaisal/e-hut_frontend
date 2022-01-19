@@ -24,6 +24,7 @@ import DeliverymenList from "./components/AdminDashboard/Deliveryman/deliveryman
 import ShopList from "./components/AdminDashboard/Shop/shopList";
 import UserTypeState from "./components/store/userTypeState";
 import CustomerOrderDashBoard from "./components/CustomerOrderDashboard/orderDashBoard";
+import RegisterAdmin from "./components/AdminDashboard/Admin/RegisterAdmin";
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
           <Route exact path="/customer/list" component={CustomerList} />
           <Route exact path="/deliveryman/list" component={DeliverymenList} />
           <Route exact path="/shop/list" component={ShopList} />
+          <Route exact path="/admin/register" component={RegisterAdmin} />
           <Route
             exact
             path="/customer/order/details"
