@@ -11,22 +11,14 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [address, setAddress] = useState("");
+  let verrified = false;
 
   const SubmitHandler = async (e) => {
     // console.log(
     //   name + phone + email + gender + " " + password + confirmPassword + address
     // );
-    if (
-      name === "" ||
-      phone === "" ||
-      email === "" ||
-      gender === "" ||
-      password === "" ||
-      confirmPassword === "" ||
-      address === ""
-    ) {
-      alert("Fill all the required Field");
-    } else if (password === confirmPassword) {
+    e.preventDefault();
+    if (password === confirmPassword) {
       axios
         .post("https://localhost:44390/api/Customers", {
           Name: name,
@@ -50,7 +42,7 @@ const SignUp = () => {
           console.log(err);
         });
     } else {
-      alert("Password do not match");
+      alert("Password does not match");
     }
   };
 
@@ -59,7 +51,7 @@ const SignUp = () => {
       <br />
       <br />
       <br />
-      <form action="">
+      <form action="" onSubmit={SubmitHandler}>
         <div className="form-group form-content">
           <input
             className="form-control"
@@ -67,6 +59,7 @@ const SignUp = () => {
             placeholder="Enter your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required={true}
           />
           <br />
           <input
@@ -75,6 +68,7 @@ const SignUp = () => {
             placeholder="Enter Your Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            required={true}
           />
           <br />
           <input
@@ -83,6 +77,7 @@ const SignUp = () => {
             placeholder="Enter Your Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required={true}
           />
           <br />
           <div className="gender-radio ">
@@ -108,6 +103,7 @@ const SignUp = () => {
                   value="Female"
                   id=""
                   onChange={(e) => setGender(e.target.value)}
+                  required={true}
                 />
                 <label htmlFor="">Female</label>
               </div>
@@ -124,6 +120,7 @@ const SignUp = () => {
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required={true}
           />
           <br />
           <input
@@ -133,6 +130,7 @@ const SignUp = () => {
             placeholder="Confirm your password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            required={true}
           />{" "}
           <br />
           <input
@@ -141,13 +139,13 @@ const SignUp = () => {
             placeholder="Enter Your Address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            required={true}
           />
           <br />
           <div className="row">
             <button
-              type="button"
+              type="submit"
               className="btnSubmit  btn-primary btn-sm text-center"
-              onClick={SubmitHandler}
             >
               SignUp
             </button>

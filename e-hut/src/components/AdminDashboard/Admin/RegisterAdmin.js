@@ -18,17 +18,8 @@ const RegisterAdmin = () => {
     // console.log(
     //   name + phone + email + gender + " " + password + confirmPassword + address
     // );
-    if (
-      name === "" ||
-      phone === "" ||
-      email === "" ||
-      gender === "" ||
-      password === "" ||
-      confirmPassword === "" ||
-      address === ""
-    ) {
-      alert("Fill all the required Field");
-    } else if (password === confirmPassword) {
+    e.preventDefault();
+    if (password === confirmPassword) {
       axios
         .post("https://localhost:44390/api/Admins", {
           Name: name,
@@ -52,40 +43,42 @@ const RegisterAdmin = () => {
           console.log(err);
         });
     } else {
-      alert("Password do not match");
+      alert("Password does not match");
     }
   };
 
   return (
     <React.Fragment>
-      <Dashboard />
       <br />
       <br />
       <br />
-      <form action="">
+      <form action="" onSubmit={SubmitHandler}>
         <div className="form-group form-content">
           <input
             className="form-control"
             type="text"
-            placeholder="Enter Name"
+            placeholder="Enter your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required={true}
           />
           <br />
           <input
             className="form-control"
             type="text"
-            placeholder="Enter Phone Number"
+            placeholder="Enter Your Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            required={true}
           />
           <br />
           <input
             className="form-control"
             type="email"
-            placeholder="Enter Email Address"
+            placeholder="Enter Your Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required={true}
           />
           <br />
           <div className="gender-radio ">
@@ -111,6 +104,7 @@ const RegisterAdmin = () => {
                   value="Female"
                   id=""
                   onChange={(e) => setGender(e.target.value)}
+                  required={true}
                 />
                 <label htmlFor="">Female</label>
               </div>
@@ -127,6 +121,7 @@ const RegisterAdmin = () => {
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required={true}
           />
           <br />
           <input
@@ -136,6 +131,7 @@ const RegisterAdmin = () => {
             placeholder="Confirm your password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            required={true}
           />{" "}
           <br />
           <input
@@ -144,18 +140,17 @@ const RegisterAdmin = () => {
             placeholder="Enter Your Address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            required={true}
           />
           <br />
           <div className="row">
             <button
-              type="button"
+              type="submit"
               className="btnSubmit  btn-primary btn-sm text-center"
-              onClick={SubmitHandler}
             >
-              Register
+              SignUp
             </button>
           </div>
-          <div className="row"></div>
         </div>
       </form>
       <br />
