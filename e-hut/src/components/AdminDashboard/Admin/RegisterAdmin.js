@@ -15,29 +15,30 @@ const RegisterAdmin = () => {
   var cred = data.Phone + ":" + data.Password;
 
   const SubmitHandler = async (e) => {
-    console.log(
-      name + phone + email + gender + " " + password + confirmPassword + address
-    );
-    if (password === confirmPassword) {
+    // console.log(
+    //   name + phone + email + gender + " " + password + confirmPassword + address
+    // );
+    if (
+      name === "" ||
+      phone === "" ||
+      email === "" ||
+      gender === "" ||
+      password === "" ||
+      confirmPassword === "" ||
+      address === ""
+    ) {
+      alert("Fill all the required Field");
+    } else if (password === confirmPassword) {
       axios
-        .post(
-          "https://localhost:44390/api/Admins/",
-          {
-            Name: name,
-            Address: address,
-            Phone: phone,
-            Email: email,
-            Gender: gender,
-            Password: password,
-          },
-          {
-            headers: {
-              Authorization: "Basic " + btoa(cred),
-            },
-          }
-        )
+        .post("https://localhost:44390/api/Admins", {
+          Name: name,
+          Address: address,
+          Phone: phone,
+          Email: email,
+          Gender: gender,
+          Password: password,
+        })
         .then((response) => {
-          console.log(response.status);
           alert("Admin Created");
           setName("");
           setPhone("");
@@ -50,6 +51,8 @@ const RegisterAdmin = () => {
         .catch((err) => {
           console.log(err);
         });
+    } else {
+      alert("Password do not match");
     }
   };
 

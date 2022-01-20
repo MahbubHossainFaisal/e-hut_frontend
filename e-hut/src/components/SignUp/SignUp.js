@@ -16,7 +16,17 @@ const SignUp = () => {
     // console.log(
     //   name + phone + email + gender + " " + password + confirmPassword + address
     // );
-    if (password === confirmPassword) {
+    if (
+      name === "" ||
+      phone === "" ||
+      email === "" ||
+      gender === "" ||
+      password === "" ||
+      confirmPassword === "" ||
+      address === ""
+    ) {
+      alert("Fill all the required Field");
+    } else if (password === confirmPassword) {
       axios
         .post("https://localhost:44390/api/Customers", {
           Name: name,
@@ -39,6 +49,8 @@ const SignUp = () => {
         .catch((err) => {
           console.log(err);
         });
+    } else {
+      alert("Password do not match");
     }
   };
 
