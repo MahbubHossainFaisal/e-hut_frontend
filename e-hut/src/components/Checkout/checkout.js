@@ -12,7 +12,6 @@ import classes from "./checkout.module.css";
 
 const Checkout = (props) => {
   const [customerName, setCustomerName] = useState("");
-  const checkoutData = JSON.stringify(props.location.state.details);
   // console.log(props.location.state.subtotal)
   let date = new Date().toLocaleDateString();
   const grandTotal =
@@ -33,7 +32,6 @@ const Checkout = (props) => {
 
   const orderHandler = async (e) => {
     e.preventDefault();
-    console.log(checkoutData);
 
     await axios
       .post(
