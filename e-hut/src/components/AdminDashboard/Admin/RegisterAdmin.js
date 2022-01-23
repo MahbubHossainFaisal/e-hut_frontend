@@ -15,29 +15,21 @@ const RegisterAdmin = () => {
   var cred = data.Phone + ":" + data.Password;
 
   const SubmitHandler = async (e) => {
-    console.log(
-      name + phone + email + gender + " " + password + confirmPassword + address
-    );
+    // console.log(
+    //   name + phone + email + gender + " " + password + confirmPassword + address
+    // );
+    e.preventDefault();
     if (password === confirmPassword) {
       axios
-        .post(
-          "https://localhost:44390/api/Admins/",
-          {
-            Name: name,
-            Address: address,
-            Phone: phone,
-            Email: email,
-            Gender: gender,
-            Password: password,
-          },
-          {
-            headers: {
-              Authorization: "Basic " + btoa(cred),
-            },
-          }
-        )
+        .post("https://localhost:44390/api/Admins", {
+          Name: name,
+          Address: address,
+          Phone: phone,
+          Email: email,
+          Gender: gender,
+          Password: password,
+        })
         .then((response) => {
-          console.log(response.status);
           alert("Admin Created");
           setName("");
           setPhone("");
@@ -50,39 +42,43 @@ const RegisterAdmin = () => {
         .catch((err) => {
           console.log(err);
         });
+    } else {
+      alert("Password does not match");
     }
   };
 
   return (
     <React.Fragment>
-      <Dashboard />
       <br />
       <br />
       <br />
-      <form action="">
+      <form action="" onSubmit={SubmitHandler}>
         <div className="form-group form-content">
           <input
             className="form-control"
             type="text"
-            placeholder="Enter Name"
+            placeholder="Enter your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required={true}
           />
           <br />
           <input
             className="form-control"
             type="text"
-            placeholder="Enter Phone Number"
+            placeholder="Enter Your Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            required={true}
           />
           <br />
           <input
             className="form-control"
             type="email"
-            placeholder="Enter Email Address"
+            placeholder="Enter Your Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required={true}
           />
           <br />
           <div className="gender-radio ">
@@ -108,6 +104,7 @@ const RegisterAdmin = () => {
                   value="Female"
                   id=""
                   onChange={(e) => setGender(e.target.value)}
+                  required={true}
                 />
                 <label htmlFor="">Female</label>
               </div>
@@ -124,6 +121,7 @@ const RegisterAdmin = () => {
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required={true}
           />
           <br />
           <input
@@ -133,6 +131,7 @@ const RegisterAdmin = () => {
             placeholder="Confirm your password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            required={true}
           />{" "}
           <br />
           <input
@@ -141,18 +140,17 @@ const RegisterAdmin = () => {
             placeholder="Enter Your Address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            required={true}
           />
           <br />
           <div className="row">
             <button
-              type="button"
+              type="submit"
               className="btnSubmit  btn-primary btn-sm text-center"
-              onClick={SubmitHandler}
             >
-              Register
+              SignUp
             </button>
           </div>
-          <div className="row"></div>
         </div>
       </form>
       <br />
