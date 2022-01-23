@@ -25,10 +25,10 @@ const Checkout = (props) => {
     const orderHandler = async(e) =>{
         e.preventDefault();
         console.log('Entered in orderhandler')
-        const userID = props.location.state.UserId;
+       
        await axios
-       .post("https://localhost:44390/api/Orders", {
-        
+       .post("https://localhost:44390/api/Checkout", {
+        Details: props.location.state.details
       })
       .then((res) => {
         if (res.status === 200) {
