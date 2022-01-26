@@ -1,17 +1,22 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Badge,
   Button,
   Card,
   Container,
   Form,
-  ListGroup,
+  ListGroup
 } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import CartContext from "../store/cart-context";
 import classes from "./checkout.module.css";
 
 const Checkout = (props) => {
+  
   const [customerName, setCustomerName] = useState("");
+  const cartCtx = useContext(CartContext)
+  const history = useHistory()
   // console.log(props.location.state.subtotal)
   let date = new Date().toLocaleDateString();
   const grandTotal =
@@ -33,6 +38,7 @@ const Checkout = (props) => {
   const orderHandler = async (e) => {
     e.preventDefault();
 
+
     await axios
       .post(
         "https://localhost:44390/api/Checkout",
@@ -47,6 +53,14 @@ const Checkout = (props) => {
         console.log(err);
       });
   };
+
+
+  const removeEverythingHandler = () =>{
+      cartCtx.removeEverything();
+      localStorage.removeItem('shopsCounter')
+      history.push('/home')
+
+  }
   return (
     <Form onSubmit={orderHandler}>
       <Container className={`${classes.center} my-5`}>
@@ -118,7 +132,7 @@ const Checkout = (props) => {
                 className="btn btn-primary btn-md "
                 value="Confirm"
               />
-              <Button variant="primary" className="mx-2">
+              <Button variant="primary" className="mx-2" onClick={removeEverythingHandler}>
                 Cancel
               </Button>
             </ListGroup.Item>

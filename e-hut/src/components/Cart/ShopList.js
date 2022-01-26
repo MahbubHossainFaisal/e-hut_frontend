@@ -1,14 +1,15 @@
 import axios from 'axios'
-import React, { useEffect, useState,useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import CartContext from '../store/cart-context'
-import classes from './ShopList.module.css'
 const ShopList = (props) => {
     const [shops,setShops] = useState([])
     const [clicked,setClicked] = useState('Select')
-    const [buttonColor,setButtonColor] = useState(false)
+   
     const cartCtx = useContext(CartContext)
-    
+    const [select,setSelect] = useState(false)
+   
+
     useEffect(() =>{
 
       const getShop =async () =>{
@@ -25,15 +26,30 @@ const ShopList = (props) => {
       });
 	  
       
-    
+     if(localStorage.getItem('shopsCounter')){
+        //console.log('entered')
+         let arr = JSON.parse(localStorage.getItem('shopsCounter'))
+         //console.log('arr',arr)
+         arr.map(item =>{
+            //  console.log('props',props.shopID)
+            //   console.log('item',item)
+             if(item === props.shopID) {
+                
+                 setSelect(true)
+                 setClicked('Selected')
+             }
+         })
+     }
 
 	}
 	getShop();
 
 
+     
+
   
     },[])
-
+    
      
 
     //console.log(shops)
@@ -53,14 +69,26 @@ const ShopList = (props) => {
            }]
         })
         
+        if(localStorage.getItem('shopsCounter')){
+            let arr = JSON.parse(localStorage.getItem('shopsCounter'))
+            arr = [...arr, props.shopID]
+            //console.log('arr',arr);
+            localStorage.setItem('shopsCounter',JSON.stringify(arr))
+        }
+        else{
+            let arr = [props.shopID]
+            localStorage.setItem('shopsCounter',JSON.stringify(arr))
+        }
+     
+        cartCtx.addShop(1)
         setClicked('Selected')
-        setButtonColor(true)
-        console.log('shopList',cartCtx.items)
+        setSelect(true)
+       // console.log('shopList',cartCtx.items)
         cartCtx.removeShops(props.shopID,props.productId)
          
     }
 
-
+     
        
      
    
@@ -76,7 +104,7 @@ const ShopList = (props) => {
             <Card.Text>
                 Product: <h6>{props.product}</h6>
             </Card.Text>
-            <Button variant='primary' className='btn-sm' onClick={selectShopHandler} disabled={buttonColor? true: false}>{clicked}</Button>
+            <Button variant='primary' className='btn-sm' onClick={selectShopHandler} disabled={select ? true: false}>{clicked}</Button>
         </Card.Body>
         </Card>
         

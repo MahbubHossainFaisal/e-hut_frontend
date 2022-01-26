@@ -8,11 +8,16 @@ import ShopList from './ShopList'
 
 
 const CartScreen = () => {
-   
+   // localStorage.removeItem('shops')
     const [customer,setCustomer] = useState(true)
-    let checker = false;
+    let storageShops = 0;
     const[checkoutDetails,setCheckoutDetails] = useState([])
-    
+    const [shopCounter, setShopCounter] = useState(0)
+    //localStorage.removeItem('shops')
+    // let arr = ['Faisal','Borno']
+    // localStorage.setItem('shops',JSON.stringify(arr))
+    // let ans = JSON.parse(localStorage.getItem('shops'))
+    // console.log(ans[0])
     const history = useHistory()
     const cartCtx = useContext(CartContext)
    // console.log(cartCtx.items)
@@ -83,6 +88,8 @@ const CartScreen = () => {
             })
         }
    }
+
+
     return (
         <div className={classes.cart}>
             <Row>
@@ -135,8 +142,9 @@ const CartScreen = () => {
                          <h3>{totalAmount} BDT.</h3>
                         </ListGroupItem>
                         <ListGroupItem>
-                            <Button type='button' className='btn-block' onClick={checkoutHandler}
+                         <Button type='button' className='btn-block' onClick={checkoutHandler}
                             >Proceed to Checkout</Button>
+                            
                         </ListGroupItem>
                         </ListGroup>
                     </Card>
@@ -157,7 +165,7 @@ const CartScreen = () => {
             <Col md={1}>
 
              </Col>
-           {cartCtx.items.map(item => item.shopsId.map(element => <ShopList  shopID={element} product={item.name} productId={item.id} productPrice={item.price} productAmount={item.amount}  selectedShop={selectedShopsHandler}/>) )}
+           {cartCtx.items.map(item => item.shopsId.map(element => <ShopList  shopID={element} product={item.name} productId={item.id} productPrice={item.price} productAmount={item.amount}  selectedShop={selectedShopsHandler} />) )}
         </Row>
         
         </div>

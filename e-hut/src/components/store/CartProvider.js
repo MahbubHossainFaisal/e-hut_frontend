@@ -3,6 +3,7 @@ import CartContext from './cart-context'
 
 const defaultCartState = {
     items : [],
+    numberOfShops:0,
     totalAmount: 0,
 }
 
@@ -36,6 +37,7 @@ const cartReducer = (state,action) =>{
 
         return {
             items: updatedItems,
+            numberOfShops: state.numberOfShops,
             totalAmount: updatedTotalAmount
         }
     }
@@ -59,6 +61,7 @@ const cartReducer = (state,action) =>{
         }
         return{
             items: updatedItems,
+            numberOfShops: state.numberOfShops,
             totalAmount: updatedTotalAmount
         }
     }
@@ -75,6 +78,7 @@ const cartReducer = (state,action) =>{
 
         return{
             items: updatedItems,
+            numberOfShops: state.numberOfShops,
             totalAmount: updatedTotalAmount
         }
     }
@@ -88,6 +92,25 @@ const cartReducer = (state,action) =>{
         //console.log(state.items)
         return{
             items: existingItems,
+            numberOfShops: state.numberOfShops,
+            totalAmount: state.totalAmount
+        }
+    }
+
+    if(action.type === 'REMOVEEVERYTHING'){
+        return{
+            items: [],
+            numberOfShops:0,
+            totalAmount: 0
+        }
+    }
+
+    if(action.type === 'ADDSHOP'){
+        let number = state.numberOfShops + action.num
+        //console.log(number)
+        return{
+            items: state.items,
+            numberOfShops: number,
             totalAmount: state.totalAmount
         }
     }
@@ -113,13 +136,23 @@ const CartProvider = props =>{
     const removeShopsHandler = (shopId,productId) =>{
         dispatchCartAction({type: 'REMOVESHOPS', shopId: shopId, productId: productId})
     }
+
+    const removeEverythingHandler = () =>{
+        dispatchCartAction({type:'REMOVEEVERYTHING'})
+    }
+    const addShopHandler = (num) =>{
+        dispatchCartAction({type: 'ADDSHOP', num: num})
+    }
     const cartContext = {
         items: cartState.items,
+        numberOfShops: cartState.numberOfShops,
         totalAmount: cartState.totalAmount,
         addItem: addItemToCartHandler,
         removeItem: removeItemFromCartHandler,
         removeItemFully: removeItemFullyFromCartHandler,
-        removeShops: removeShopsHandler
+        removeShops: removeShopsHandler,
+        removeEverything: removeEverythingHandler,
+        addShop: addShopHandler
     }
     return <CartContext.Provider value={cartContext}>
         {props.children}
