@@ -114,6 +114,7 @@ const cartReducer = (state,action) =>{
             totalAmount: state.totalAmount
         }
     }
+    
 
     return defaultCartState;
 }
@@ -143,6 +144,7 @@ const CartProvider = props =>{
     const addShopHandler = (num) =>{
         dispatchCartAction({type: 'ADDSHOP', num: num})
     }
+    
     const cartContext = {
         items: cartState.items,
         numberOfShops: cartState.numberOfShops,
@@ -152,7 +154,8 @@ const CartProvider = props =>{
         removeItemFully: removeItemFullyFromCartHandler,
         removeShops: removeShopsHandler,
         removeEverything: removeEverythingHandler,
-        addShop: addShopHandler
+        addShop: addShopHandler,
+       
     }
     return <CartContext.Provider value={cartContext}>
         {props.children}

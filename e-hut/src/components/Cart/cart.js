@@ -44,6 +44,7 @@ const CartScreen = () => {
 
    const cartItemFullyRemoveHandler = id =>{
         cartCtx.removeItemFully(id)
+        setShopCounter(shopCounter-1)
    }
 
 
@@ -81,7 +82,12 @@ const CartScreen = () => {
            setCustomer(false)
        }
         else{
-            userID = {...userID, subtotal: totalAmount ? totalAmount : 0, discount: 20, details: checkoutDetails}
+             
+            userID = {...userID, subtotal: totalAmount ? totalAmount : 0, discount: 20, details: checkoutDetails.length > 0 ? checkoutDetails : []}
+            // if(checkoutDetails.length > 0){
+            // localStorage.setItem('orderDetails',JSON.stringify(checkoutDetails))
+        
+            // }
             history.push({
             pathname: '/checkout',
             state: userID
@@ -89,7 +95,12 @@ const CartScreen = () => {
         }
    }
 
+   const counterShop = (count) =>{
+        setShopCounter(shopCounter+count)
+   }
 
+// console.log('cartItems length: ', cartCtx.items.length)
+// console.log('shop number: ', shopCounter)
     return (
         <div className={classes.cart}>
             <Row>
@@ -142,7 +153,7 @@ const CartScreen = () => {
                          <h3>{totalAmount} BDT.</h3>
                         </ListGroupItem>
                         <ListGroupItem>
-                         <Button type='button' className='btn-block' onClick={checkoutHandler}
+                         <Button type='button' className='btn-block' disabled={cartCtx.items.length !== shopCounter ? true: false} onClick={checkoutHandler}
                             >Proceed to Checkout</Button>
                             
                         </ListGroupItem>
@@ -165,7 +176,7 @@ const CartScreen = () => {
             <Col md={1}>
 
              </Col>
-           {cartCtx.items.map(item => item.shopsId.map(element => <ShopList  shopID={element} product={item.name} productId={item.id} productPrice={item.price} productAmount={item.amount}  selectedShop={selectedShopsHandler} />) )}
+           {cartCtx.items.map(item => item.shopsId.map(element => <ShopList counter={counterShop}  shopID={element} product={item.name} productId={item.id} productPrice={item.price} productAmount={item.amount}  selectedShop={selectedShopsHandler} />) )}
         </Row>
         
         </div>
