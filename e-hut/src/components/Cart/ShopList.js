@@ -26,20 +26,7 @@ const ShopList = (props) => {
       });
 	  
       
-     if(localStorage.getItem('shopsCounter')){
-        //console.log('entered')
-         let arr = JSON.parse(localStorage.getItem('shopsCounter'))
-         //console.log('arr',arr)
-         arr.map(item =>{
-            //  console.log('props',props.shopID)
-            //   console.log('item',item)
-             if(item === props.shopID) {
-                
-                 setSelect(true)
-                 setClicked('Selected')
-             }
-         })
-     }
+    
 
 	}
 	getShop();
@@ -56,6 +43,8 @@ const ShopList = (props) => {
     const shop = shops.filter(item => item.ShopId === props.shopID)
     //console.log(shop)
     let userID = JSON.parse(localStorage.getItem('user'));
+
+    
     //console.log(userID.UserId)
     const selectShopHandler = () =>{
         props.selectedShop({
@@ -69,26 +58,24 @@ const ShopList = (props) => {
            }]
         })
         
-        if(localStorage.getItem('shopsCounter')){
-            let arr = JSON.parse(localStorage.getItem('shopsCounter'))
-            arr = [...arr, props.shopID]
-            //console.log('arr',arr);
-            localStorage.setItem('shopsCounter',JSON.stringify(arr))
-        }
-        else{
-            let arr = [props.shopID]
-            localStorage.setItem('shopsCounter',JSON.stringify(arr))
-        }
+        
      
-        cartCtx.addShop(1)
+       
+        //console.log(cartCtx.numberOfShops)
         setClicked('Selected')
+        
         setSelect(true)
+        
        // console.log('shopList',cartCtx.items)
         cartCtx.removeShops(props.shopID,props.productId)
          
     }
-
      
+   useEffect(() =>{
+        if(clicked === 'Selected'){
+        props.counter(1)
+    }
+   },[clicked])
        
      
    
