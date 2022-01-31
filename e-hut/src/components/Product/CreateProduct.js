@@ -13,14 +13,25 @@ const AddProduct = (props) => {
     Details: "",
     Warrenty: "",
     Price: "",
+    Quantity: "",
     Status: "true",
   });
+
+  var user = JSON.parse(localStorage.getItem("user"));
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const { Name, BrandId, CategoryId, Details, Warrenty, Price, Status } =
-    product;
+  const {
+    Name,
+    BrandId,
+    CategoryId,
+    Details,
+    Warrenty,
+    Price,
+    Quantity,
+    Status,
+  } = product;
 
   const onInputChange = (e) => {
     setProduct({ ...product, [e.target.name]: [e.target.value] });
@@ -48,6 +59,10 @@ const AddProduct = (props) => {
       errors.CategoryId = "Category Is Required";
     }
 
+    if (product.Quantity === "") {
+      errors.Price = "Quantity Is Required";
+    }
+
     if (product.Price === "") {
       errors.Price = "Price Is Required";
     }
@@ -71,7 +86,13 @@ const AddProduct = (props) => {
         })
         .then((res) => {
           alert("Product added");
-          console.log(res.status);
+          axios.post("https://localhost:44390/api/ProductDistributions", {
+            ProductId: res.data.ProductId,
+            ShopId: user.UserId,
+            Quantity: product.Quantity[0],
+            Status: "True",
+          });
+          console.log(user);
         })
         .catch((error) => {
           console.log(error);
@@ -175,6 +196,18 @@ const AddProduct = (props) => {
               <option value="2">2</option>
               <option value="3">3</option>
             </select>
+          </div>
+          <br />
+
+          <div className="form-group">
+            <input
+              type="number"
+              className="form-control"
+              name="Quantity"
+              placeholder="Quantity"
+              value={Quantity}
+              onChange={(e) => onInputChange(e)}
+            ></input>
           </div>
           <br />
           <div className="form-group">

@@ -13,7 +13,7 @@ const SalesReport = (props) => {
   useEffect(() => {
     axios
       .get(
-        "https://localhost:44390/api/Shops/monthlySalesForYearReports/" + 2021
+        "https://localhost:44390/api/Shops/monthlySalesForYearReports/" + 2022
       )
       .then((response) => {
         setSalesReportData(response.data);
@@ -26,12 +26,14 @@ const SalesReport = (props) => {
 
   return (
     <React.Fragment>
+      <label className="m-3">Amount</label>
       <BarChart width={600} height={600} data={SalesReportData}>
         <Bar dataKey="y" fill="green" />
         <CartesianGrid stroke="#ccc" />
         <XAxis dataKey="label" />
         <YAxis dataKey="y" />
       </BarChart>
+      <label className="monthLabel">Month</label>
       <div className="EDBtn">
         <ExcelFile>
           <ExcelSheet data={SalesReportData} name="Employees">
