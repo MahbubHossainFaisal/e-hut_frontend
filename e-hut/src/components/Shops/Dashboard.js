@@ -423,7 +423,7 @@ const ShopDashboard = (props) => {
               <td>{item.Price}</td>
 
               <td>
-                <textarea value={item.Comment} />
+                <textarea disabled={true} value={item.Comment} />
               </td>
               <td>
                 <StarRatingComponent
