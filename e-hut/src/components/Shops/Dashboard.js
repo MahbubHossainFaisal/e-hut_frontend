@@ -12,6 +12,8 @@ const ShopDashboard = (props) => {
   const [countProcessingOrder, setCountProcessingOrder] = useState(0);
   const [DeliverProduct, setDeliverProduct] = useState([]);
   const [countDeliverOrder, setCountDeliverOrder] = useState(0);
+  const [ReturnedProduct, setReturnedProduct] = useState([]);
+  const [countReturnedOrder, setCountReturnedOrder] = useState(0);
 
   useEffect(() => {
     axios
@@ -39,6 +41,22 @@ const ShopDashboard = (props) => {
         setCountProcessingOrder(response.data.length);
         setProcessingProduct(response.data);
         console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get(
+        "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
+          user.UserId +
+          "/" +
+          "Return"
+      )
+      .then((response) => {
+        setCountReturnedOrder(response.data.length);
+        setReturnedProduct(response.data);
+        console.log(response.data[0].Product.ProductId);
       })
       .catch((err) => {
         console.log(err);
@@ -167,25 +185,91 @@ const ShopDashboard = (props) => {
       });
   };
 
+  const AcceptReturnOrder = (srId) => (e) => {
+    axios
+      .post("https://localhost:44390/api/Shops/ProductOrderAcceptance", {
+        SalesRecordId: srId,
+        status: "Returned",
+      })
+      .then((response) => {
+        console.log(response.status);
+        axios
+          .get(
+            "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
+              user.UserId +
+              "/" +
+              "Return"
+          )
+          .then((response) => {
+            setCountReturnedOrder(response.data.length);
+            setReturnedProduct(response.data);
+            console.log(response.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const RejectReturnOrder = (srId) => (e) => {
+    axios
+      .post("https://localhost:44390/api/Shops/ProductOrderAcceptance", {
+        SalesRecordId: srId,
+        status: "Rejected",
+      })
+      .then((response) => {
+        console.log(response.status);
+        axios
+          .get(
+            "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
+              user.UserId +
+              "/" +
+              "Return"
+          )
+          .then((response) => {
+            setCountReturnedOrder(response.data.length);
+            setReturnedProduct(response.data);
+            console.log(response.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const onClickDelivered = (e) => {
     document.querySelector(".PendingOrderEl").style.display = "none";
     document.querySelector(".ProcessingOrderEl").style.display = "none";
     document.querySelector(".DeliverOrderOrderEl").style.display = "block";
+    document.querySelector(".ReturnedOrderOrderEl").style.display = "none";
   };
 
   const OnClickPendingOrder = (e) => {
     document.querySelector(".PendingOrderEl").style.display = "block";
     document.querySelector(".ProcessingOrderEl").style.display = "none";
     document.querySelector(".DeliverOrderOrderEl").style.display = "none";
+    document.querySelector(".ReturnedOrderOrderEl").style.display = "none";
   };
 
   const OnClickProcessingOrder = (e) => {
     document.querySelector(".ProcessingOrderEl").style.display = "block";
     document.querySelector(".PendingOrderEl").style.display = "none";
     document.querySelector(".DeliverOrderOrderEl").style.display = "none";
+    document.querySelector(".ReturnedOrderOrderEl").style.display = "none";
   };
 
-  const OnClickViewReview = (e) => {};
+  const OnClickReturnedOrder = (e) => {
+    document.querySelector(".ReturnedOrderOrderEl").style.display = "block";
+    document.querySelector(".ProcessingOrderEl").style.display = "none";
+    document.querySelector(".PendingOrderEl").style.display = "none";
+    document.querySelector(".DeliverOrderOrderEl").style.display = "none";
+  };
 
   return (
     <React.Fragment>
@@ -223,6 +307,19 @@ const ShopDashboard = (props) => {
             type="button"
             class="btn btn-outline-primary "
             onClick={onClickDelivered}
+          >
+            Details
+          </button>
+        </div>
+
+        <div className="shadow-box-example z-depth-5">
+          <p id="tOrderText">Returned</p>
+          <p id="tOrderCount">{countReturnedOrder}</p>
+          <button
+            id="penBtn"
+            type="button"
+            class="btn btn-outline-primary "
+            onClick={OnClickReturnedOrder}
           >
             Details
           </button>
@@ -335,6 +432,52 @@ const ShopDashboard = (props) => {
                   value={item.Ratting}
                 />
               </td>
+            </tr>
+          ))}
+        </table>
+      </div>
+
+      <div className="ReturnedOrderOrderEl">
+        <table className="table">
+          <tr>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Price</th>
+          </tr>
+
+          {ReturnedProduct.map((item) => (
+            <tr>
+              <td>{item.Product.ProductId}</td>
+              <td>{item.Product.Name}</td>
+              <td>{item.Product.Price}</td>
+              <th>
+                <input
+                  type="submit"
+                  name="submit"
+                  className="btn btn-primary btn-md mx-5"
+                  style={{
+                    backgroundColor: "#21D192",
+                    textDecoration: "none",
+                    color: "white",
+                  }}
+                  value="Accept"
+                  onClick={AcceptReturnOrder(item.SalesRecordId)}
+                />
+              </th>
+              <th>
+                <input
+                  type="submit"
+                  name="submit"
+                  className="btn btn-primary btn-md mx-5"
+                  style={{
+                    backgroundColor: "#21D192",
+                    textDecoration: "none",
+                    color: "white",
+                  }}
+                  value="Reject"
+                  onClick={RejectReturnOrder(item.SalesRecordId)}
+                />
+              </th>
             </tr>
           ))}
         </table>
