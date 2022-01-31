@@ -1,23 +1,32 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Badge,
   Button,
   Card,
   Container,
   Form,
-  ListGroup,
+  ListGroup
 } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import CartContext from "../store/cart-context";
 import classes from "./checkout.module.css";
+import ThankYou from "./thankyou";
 
 const Checkout = (props) => {
+  
   const [customerName, setCustomerName] = useState("");
+  const cartCtx = useContext(CartContext)
+  const history = useHistory() 
+  const [orderConfirmed, setOrderConfirmed] = useState(false)
   // console.log(props.location.state.subtotal)
   let date = new Date().toLocaleDateString();
   const grandTotal =
     props.location.state.subtotal - props.location.state.discount;
 
-  console.log(props.location.state.details);
+  // let details = JSON.parse(localStorage.getItem('orderDetails'))
+  // console.log(details)
+  console.log(props.location.state.details)
   useEffect(() => {
     const userID = props.location.state.UserId;
     axios
@@ -33,22 +42,38 @@ const Checkout = (props) => {
   const orderHandler = async (e) => {
     e.preventDefault();
 
+
     await axios
       .post(
         "https://localhost:44390/api/Checkout",
-        props.location.state.details
+       props.location.state.details
       )
       .then((res) => {
         if (res.status === 200) {
           console.log("SUccessfull confirmation");
+          setOrderConfirmed(true)
+           cartCtx.removeEverything();
+           
+           
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+
+  const removeEverythingHandler = () =>{
+      cartCtx.removeEverything();
+      history.push('/home')
+
+  }
+  const goToHomeHandler = (flag) =>{
+      setOrderConfirmed(flag)
+  }
   return (
-    <Form onSubmit={orderHandler}>
+    <div>
+    {!orderConfirmed ? (<Form onSubmit={orderHandler}>
       <Container className={`${classes.center} my-5`}>
         <Card
           style={{ width: "46rem" }}
@@ -118,14 +143,15 @@ const Checkout = (props) => {
                 className="btn btn-primary btn-md "
                 value="Confirm"
               />
-              <Button variant="primary" className="mx-2">
+              <Button variant="primary" className="mx-2" onClick={removeEverythingHandler}>
                 Cancel
               </Button>
             </ListGroup.Item>
           </ListGroup>
         </Card>
       </Container>
-    </Form>
+    </Form>) : (<ThankYou onHome={goToHomeHandler}/>)}
+    </div>
   );
 };
 

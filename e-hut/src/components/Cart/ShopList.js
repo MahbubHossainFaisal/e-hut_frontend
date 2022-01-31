@@ -1,14 +1,15 @@
 import axios from 'axios'
-import React, { useEffect, useState,useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import CartContext from '../store/cart-context'
-import classes from './ShopList.module.css'
 const ShopList = (props) => {
     const [shops,setShops] = useState([])
     const [clicked,setClicked] = useState('Select')
-    const [buttonColor,setButtonColor] = useState(false)
+   
     const cartCtx = useContext(CartContext)
-    
+    const [select,setSelect] = useState(false)
+   
+
     useEffect(() =>{
 
       const getShop =async () =>{
@@ -31,15 +32,19 @@ const ShopList = (props) => {
 	getShop();
 
 
+     
+
   
     },[])
-
+    
      
 
     //console.log(shops)
     const shop = shops.filter(item => item.ShopId === props.shopID)
     //console.log(shop)
     let userID = JSON.parse(localStorage.getItem('user'));
+
+    
     //console.log(userID.UserId)
     const selectShopHandler = () =>{
         props.selectedShop({
@@ -53,14 +58,24 @@ const ShopList = (props) => {
            }]
         })
         
+        
+     
+       
+        //console.log(cartCtx.numberOfShops)
         setClicked('Selected')
-        setButtonColor(true)
-        console.log('shopList',cartCtx.items)
+        
+        setSelect(true)
+        
+       // console.log('shopList',cartCtx.items)
         cartCtx.removeShops(props.shopID,props.productId)
          
     }
-
-
+     
+   useEffect(() =>{
+        if(clicked === 'Selected'){
+        props.counter(1)
+    }
+   },[clicked])
        
      
    
@@ -76,7 +91,7 @@ const ShopList = (props) => {
             <Card.Text>
                 Product: <h6>{props.product}</h6>
             </Card.Text>
-            <Button variant='primary' className='btn-sm' onClick={selectShopHandler} disabled={buttonColor? true: false}>{clicked}</Button>
+            <Button variant='primary' className='btn-sm' onClick={selectShopHandler} disabled={select ? true: false}>{clicked}</Button>
         </Card.Body>
         </Card>
         

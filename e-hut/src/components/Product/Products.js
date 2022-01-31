@@ -6,6 +6,7 @@ const Products = (props) => {
 	//console.log(props.location)
 	//console.log(props)
 	//props.modifyLogin(props.location.state)
+	
 	const [product, setProduct] = useState([]);
 	const [searchProduct, setSearchProduct] = useState("");
 	useEffect(() => {
