@@ -16,7 +16,6 @@ const OrderDashboard = () => {
 		setShowProvideRating(false);
 	};
 	let OrderHistoryClick = () => {
-		console.log("hjhsjda");
 		setShowOrder(false);
 		setShowHistory(true);
 		setShowProvideRating(false);

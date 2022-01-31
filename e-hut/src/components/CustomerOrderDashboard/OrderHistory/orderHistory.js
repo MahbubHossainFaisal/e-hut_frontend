@@ -23,6 +23,21 @@ const OrderHistory = (props) => {
 			});
 	}, []);
 
+	const ReturnHandler = (e) => {
+		var value = e.currentTarget.getAttribute("SRvalue");
+		axios
+			.post("https://localhost:44390/api/Shops/ProductOrderAcceptance", {
+				SalesRecordId: value,
+				status: "Return",
+			})
+			.then((res) => {
+				console.log(res.status);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
 	return (
 		<React.Fragment>
 			<div className="OH__mainContent">
@@ -54,12 +69,20 @@ const OrderHistory = (props) => {
 							<td>{item.Date}</td>
 							<td>
 								<button
-									className="btn btn-sm btn-primary"
+									className="btn btn-sm btn-primary m-2"
 									style={{ color: "black" }}
 									onClick={props.handlerFunc}
 									itemValue={item.SalesRecordId}
 								>
 									Provide Rating
+								</button>
+								<button
+									className="btn btn-sm btn-danger"
+									style={{ color: "black" }}
+									onClick={ReturnHandler}
+									SRvalue={item.SalesRecordId}
+								>
+									Request Return
 								</button>
 							</td>
 						</tr>
