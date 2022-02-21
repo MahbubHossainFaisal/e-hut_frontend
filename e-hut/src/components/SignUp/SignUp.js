@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./SignUp.css";
+import { useEffect } from "react";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -11,14 +12,57 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [address, setAddress] = useState("");
-  let verrified = false;
+
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const SubmitHandler = async (e) => {
-    // console.log(
-    //   name + phone + email + gender + " " + password + confirmPassword + address
-    // );
     e.preventDefault();
-    if (password === confirmPassword) {
+    setIsSubmit(true);
+    setFormErrors(Validate());
+    e.preventDefault();
+  };
+
+  const Validate = () => {
+    const errors = {};
+
+    if (name === "") {
+      errors.name = " Name Is Requeired";
+    }
+    if (phone === "") {
+      errors.phone = "Phone Is Requeired";
+    }
+    if (email === "") {
+      errors.email = " Email Is Requeired";
+    }
+    if (gender === "") {
+      errors.gender = "Gender Is Requeired";
+    }
+    if (password === "") {
+      errors.password = "Password Is Requeired";
+    }
+    if (confirmPassword === "") {
+      errors.confirmPassword = "Confirm Password Is Requeired";
+    } else if (password != confirmPassword) {
+      errors.confirmPassword = "Password don't match";
+    }
+
+    if (password === "" && confirmPassword != "") {
+      errors.password = "Password Is Requeired";
+      errors.confirmPassword = "";
+    }
+
+    if (address === "") {
+      errors.address = "Address Is Requeired";
+    }
+    //console.log(errors);
+    console.log(formErrors);
+    return errors;
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log("calling ready for api");
       axios
         .post("https://localhost:44390/api/Customers", {
           Name: name,
@@ -41,10 +85,8 @@ const SignUp = () => {
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      alert("Password does not match");
     }
-  };
+  }, [formErrors]);
 
   return (
     <React.Fragment>
@@ -59,17 +101,17 @@ const SignUp = () => {
             placeholder="Enter your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required={true}
           />
+          <p className="error">{formErrors.name}</p>
           <br />
           <input
             className="form-control"
-            type="text"
+            type="number"
             placeholder="Enter Your Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            required={true}
           />
+          <p className="error">{formErrors.phone}</p>
           <br />
           <input
             className="form-control"
@@ -77,8 +119,8 @@ const SignUp = () => {
             placeholder="Enter Your Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required={true}
           />
+          <p className="error">{formErrors.email}</p>
           <br />
           <div className="gender-radio ">
             <label className="text-md-start">Select Gender</label>
@@ -103,7 +145,6 @@ const SignUp = () => {
                   value="Female"
                   id=""
                   onChange={(e) => setGender(e.target.value)}
-                  required={true}
                 />
                 <label htmlFor="">Female</label>
               </div>
@@ -112,6 +153,7 @@ const SignUp = () => {
               <div className="col"></div>
             </div>
           </div>
+          <p className="error">{formErrors.gender}</p>
           <br />
           <input
             className="form-control"
@@ -120,8 +162,8 @@ const SignUp = () => {
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required={true}
           />
+          <p className="error">{formErrors.password}</p>
           <br />
           <input
             className="form-control"
@@ -130,8 +172,8 @@ const SignUp = () => {
             placeholder="Confirm your password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            required={true}
           />{" "}
+          <p className="error">{formErrors.confirmPassword}</p>
           <br />
           <input
             className="form-control"
@@ -139,8 +181,8 @@ const SignUp = () => {
             placeholder="Enter Your Address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            required={true}
           />
+          <p className="error">{formErrors.address}</p>
           <br />
           <div className="row">
             <button

@@ -10,7 +10,7 @@ const Header = (props) => {
   const history = useHistory();
   let data = "";
   let path = "";
-  let pathHome = "";
+  var pathHome = "";
 
   const setPathProfile = (e) => {
     data = JSON.parse(localStorage.getItem("user"));
@@ -44,8 +44,8 @@ const Header = (props) => {
         pathHome = "/shop/dashboard";
         history.push(pathHome);
       } else if (data.Role === "Admin") {
-        path = "/user/profile/admin";
-        history.push(path);
+        pathHome = "/admin/dashboard";
+        history.push(pathHome);
       }
     }
   };
@@ -91,12 +91,18 @@ const Header = (props) => {
             </span>{" "}
           </NavLink> */}
           <div>
-            <NavLink
-              to={`/customer/order/details`}
-              style={{ textDecoration: "none", color: "white" }}
-            >
-              <span className="me-5 text-white"> Dashboard </span>
-            </NavLink>
+            <input
+              type="submit"
+              name="submit"
+              className="btn btn-primary btn-md mx-5"
+              style={{
+                backgroundColor: "#21D192",
+                textDecoration: "none",
+                color: "white",
+              }}
+              value="Dashboard"
+              onClick={setPathHome}
+            />
 
             <NavLink
               to={`/cart`}

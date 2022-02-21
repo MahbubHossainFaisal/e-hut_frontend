@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./RegisterAdmin.css";
 import Dashboard from "../dashboard";
+import { useEffect } from "react";
 
 const RegisterAdmin = () => {
   const [name, setName] = useState("");
@@ -14,21 +15,73 @@ const RegisterAdmin = () => {
   var data = JSON.parse(localStorage.getItem("user"));
   var cred = data.Phone + ":" + data.Password;
 
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
   const SubmitHandler = async (e) => {
-    // console.log(
-    //   name + phone + email + gender + " " + password + confirmPassword + address
-    // );
     e.preventDefault();
-    if (password === confirmPassword) {
+    setIsSubmit(true);
+    setFormErrors(Validate());
+    e.preventDefault();
+  };
+
+  const Validate = () => {
+    const errors = {};
+
+    if (name === "") {
+      errors.name = " Name Is Requeired";
+    }
+    if (phone === "") {
+      errors.phone = "Phone Is Requeired";
+    }
+    if (email === "") {
+      errors.email = " Email Is Requeired";
+    }
+    if (gender === "") {
+      errors.gender = "Gender Is Requeired";
+    }
+    if (password === "") {
+      errors.password = "Password Is Requeired";
+    }
+    if (confirmPassword === "") {
+      errors.confirmPassword = "Confirm Password Is Requeired";
+    } else if (password != confirmPassword) {
+      errors.confirmPassword = "Password don't match";
+    }
+
+    if (password === "" && confirmPassword != "") {
+      errors.password = "Password Is Requeired";
+      errors.confirmPassword = "";
+    }
+
+    if (address === "") {
+      errors.address = "Address Is Requeired";
+    }
+    //console.log(errors);
+    console.log(formErrors);
+    return errors;
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log("calling ready for api");
       axios
-        .post("https://localhost:44390/api/Admins", {
-          Name: name,
-          Address: address,
-          Phone: phone,
-          Email: email,
-          Gender: gender,
-          Password: password,
-        })
+        .post(
+          "https://localhost:44390/api/Admins",
+          {
+            Name: name,
+            Address: address,
+            Phone: phone,
+            Email: email,
+            Gender: gender,
+            Password: password,
+          },
+          {
+            headers: {
+              Authorization: "Basic " + btoa(cred),
+            },
+          }
+        )
         .then((response) => {
           alert("Admin Created");
           setName("");
@@ -42,13 +95,12 @@ const RegisterAdmin = () => {
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      alert("Password does not match");
     }
-  };
+  }, [formErrors]);
 
   return (
     <React.Fragment>
+      <Dashboard />
       <br />
       <br />
       <br />
@@ -60,17 +112,17 @@ const RegisterAdmin = () => {
             placeholder="Enter your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required={true}
           />
+          <p className="error">{formErrors.name}</p>
           <br />
           <input
             className="form-control"
-            type="text"
+            type="number"
             placeholder="Enter Your Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            required={true}
           />
+          <p className="error">{formErrors.phone}</p>
           <br />
           <input
             className="form-control"
@@ -78,8 +130,8 @@ const RegisterAdmin = () => {
             placeholder="Enter Your Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required={true}
           />
+          <p className="error">{formErrors.email}</p>
           <br />
           <div className="gender-radio ">
             <label className="text-md-start">Select Gender</label>
@@ -104,7 +156,6 @@ const RegisterAdmin = () => {
                   value="Female"
                   id=""
                   onChange={(e) => setGender(e.target.value)}
-                  required={true}
                 />
                 <label htmlFor="">Female</label>
               </div>
@@ -113,6 +164,7 @@ const RegisterAdmin = () => {
               <div className="col"></div>
             </div>
           </div>
+          <p className="error">{formErrors.gender}</p>
           <br />
           <input
             className="form-control"
@@ -121,8 +173,8 @@ const RegisterAdmin = () => {
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required={true}
           />
+          <p className="error">{formErrors.password}</p>
           <br />
           <input
             className="form-control"
@@ -131,8 +183,8 @@ const RegisterAdmin = () => {
             placeholder="Confirm your password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            required={true}
           />{" "}
+          <p className="error">{formErrors.confirmPassword}</p>
           <br />
           <input
             className="form-control"
@@ -140,15 +192,15 @@ const RegisterAdmin = () => {
             placeholder="Enter Your Address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            required={true}
           />
+          <p className="error">{formErrors.address}</p>
           <br />
           <div className="row">
             <button
               type="submit"
               className="btnSubmit  btn-primary btn-sm text-center"
             >
-              SignUp
+              Register Admin
             </button>
           </div>
         </div>
