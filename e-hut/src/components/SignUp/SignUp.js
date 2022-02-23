@@ -23,6 +23,24 @@ const SignUp = () => {
     e.preventDefault();
   };
 
+  const handleBlur = (e) => {
+    setPhone(e.target.value);
+    axios
+      .get("https://localhost:44390/api/Customers/GetExisting/" + phone + "")
+      .then((response) => {
+        if (response.data == "new") {
+          console.warn(response.data);
+          console.warn(phone);
+        } else {
+          console.warn(response.data);
+          console.warn(phone);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const Validate = () => {
     const errors = {};
 
@@ -108,8 +126,7 @@ const SignUp = () => {
             className="form-control"
             type="number"
             placeholder="Enter Your Phone Number"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onBlur={handleBlur}
           />
           <p className="error">{formErrors.phone}</p>
           <br />
