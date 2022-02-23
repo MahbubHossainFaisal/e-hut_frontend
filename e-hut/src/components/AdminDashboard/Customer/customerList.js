@@ -51,7 +51,12 @@ const CustomerList = () => {
 							<td>{item.Gender}</td>
 							<td>{item.Occupation}</td>
 							<th>
-								<a className="btn btn-sm btn-primary">Details</a>
+								<a
+									className="btn btn-sm btn-primary"
+									style={{ color: "black" }}
+								>
+									Details
+								</a>
 							</th>
 						</tr>
 					))}

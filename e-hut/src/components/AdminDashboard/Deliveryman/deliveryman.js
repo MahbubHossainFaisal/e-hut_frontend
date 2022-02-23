@@ -51,7 +51,12 @@ const ShopList = () => {
 							<td>{item.Nid}</td>
 							<td>{item.Rating}</td>
 							<th>
-								<a className="btn btn-sm btn-primary">Details</a>
+								<a
+									className="btn btn-sm btn-primary"
+									style={{ color: "black" }}
+								>
+									Details
+								</a>
 							</th>
 						</tr>
 					))}
