@@ -50,6 +50,9 @@ const AddProduct = (props) => {
     if (product.Name === "") {
       console.log("Name_PR" + product.Name);
       errors.Name = "Product Name Is Requeired";
+    } else if (product.Name.length < 3) {
+      errors.Name = "Product Name at least contain 3 charecter";
+      alert(product.Name.length);
     }
     if (product.BrandId === "") {
       errors.BrandId = "Brand Is Required";
@@ -60,7 +63,7 @@ const AddProduct = (props) => {
     }
 
     if (product.Quantity === "") {
-      errors.Price = "Quantity Is Required";
+      errors.Quantity = "Quantity Is Required";
     }
 
     if (product.Price === "") {
@@ -208,6 +211,7 @@ const AddProduct = (props) => {
               value={Quantity}
               onChange={(e) => onInputChange(e)}
             ></input>
+            <p className="error">{formErrors.Quantity}</p>
           </div>
           <br />
           <div className="form-group">
