@@ -4,6 +4,7 @@ import axios from "axios";
 import "./SignUp.css";
 import { useEffect } from "react";
 import validator from "validator";
+import { useHistory } from "react-router-dom";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -13,6 +14,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [address, setAddress] = useState("");
+  const history = useHistory();
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -116,6 +118,7 @@ const SignUp = () => {
           setPassword("");
           setConfirmPassword("");
           setAddress("");
+          history.push("/login");
         })
         .catch((err) => {
           console.log(err);

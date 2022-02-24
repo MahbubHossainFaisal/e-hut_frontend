@@ -9,8 +9,9 @@ const Header = (props) => {
   console.log(useContext(userTypeContext));
   const history = useHistory();
   let data = "";
-  let path = "";
+  let pathProfile = "";
   var pathHome = "";
+  var pathDashboard = "";
 
   const setPathProfile = (e) => {
     data = JSON.parse(localStorage.getItem("user"));
@@ -19,14 +20,14 @@ const Header = (props) => {
 
     if (data !== null) {
       if (data.Role === "Customer") {
-        path = "/user/profile";
-        history.push(path);
+        pathProfile = "/user/profile";
+        history.push(pathProfile);
       } else if (data.Role === "Shop") {
-        path = "/user/profile/shopProfile";
-        history.push(path);
+        pathProfile = "/user/profile/shopProfile";
+        history.push(pathProfile);
       } else if (data.Role === "Admin") {
-        path = "/user/profile/admin";
-        history.push(path);
+        pathProfile = "/user/profile/admin";
+        history.push(pathProfile);
       }
     }
   };
@@ -50,6 +51,24 @@ const Header = (props) => {
     }
   };
 
+  const setPathDashboard = (e) => {
+    data = JSON.parse(localStorage.getItem("user"));
+
+    console.log(data);
+
+    if (data !== null) {
+      if (data.Role === "Customer") {
+        pathDashboard = "/customer/order/details";
+        history.push(pathDashboard);
+      } else if (data.Role === "Shop") {
+        pathDashboard = "/shop/dashboard";
+        history.push(pathDashboard);
+      } else if (data.Role === "Admin") {
+        pathDashboard = "/admin/dashboard";
+        history.push(pathDashboard);
+      }
+    }
+  };
   const [searchProduct, setSearchProduct] = useState("");
   //using cartContext
   const cartCtx = useContext(CartContext);
@@ -101,7 +120,7 @@ const Header = (props) => {
                 color: "white",
               }}
               value="Dashboard"
-              onClick={setPathHome}
+              onClick={setPathDashboard}
             />
 
             <NavLink

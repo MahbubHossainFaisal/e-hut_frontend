@@ -16,6 +16,14 @@
   #login-box
   #login-form
   #register-link {
-  margin-top: -60px;
+  margin-top: -50px;
+  margin-left: 80%;
+}
+
+.form {
+  margin-bottom: 25%;
+}
+
+.buttonSubmit {
   margin-left: 80%;
 }

@@ -7,13 +7,20 @@ import "./salesReport.css";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+var data = JSON.parse(localStorage.getItem("user"));
+var cred = data.Phone + ":" + data.Password;
 const SalesReport = (props) => {
   const [SalesReportData, setSalesReportData] = useState([]);
 
   useEffect(() => {
     axios
       .get(
-        "https://localhost:44390/api/Shops/monthlySalesForYearReports/" + 2022
+        "https://localhost:44390/api/Shops/monthlySalesForYearReports/" + 2022,
+        {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        }
       )
       .then((response) => {
         setSalesReportData(response.data);
