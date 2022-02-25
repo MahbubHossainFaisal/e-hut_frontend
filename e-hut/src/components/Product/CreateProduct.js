@@ -11,7 +11,7 @@ const AddProduct = (props) => {
     BrandId: "",
     CategoryId: "",
     Details: "",
-    Warrenty: "",
+    Warrenty: "0",
     Price: "",
     Quantity: "",
     Status: "true",
@@ -96,21 +96,24 @@ const AddProduct = (props) => {
           }
         )
         .then((res) => {
-          alert("Product Created");
-          axios.post(
-            "https://localhost:44390/api/ProductDistributions",
-            {
-              ProductId: res.data.ProductId,
-              ShopId: user.UserId,
-              Quantity: product.Quantity[0],
-              Status: "True",
-            },
-            {
-              headers: {
-                Authorization: "Basic " + btoa(cred),
+          if (res.status == 201) {
+            alert("Product Created");
+            axios.post(
+              "https://localhost:44390/api/ProductDistributions",
+              {
+                ProductId: res.data.ProductId,
+                ShopId: user.UserId,
+                Quantity: product.Quantity[0],
+                Status: "True",
               },
-            }
-          );
+              {
+                headers: {
+                  Authorization: "Basic " + btoa(cred),
+                },
+              }
+            );
+          }
+
           console.log(user);
         })
         .catch((error) => {
@@ -218,7 +221,9 @@ const AddProduct = (props) => {
               name="Warrenty"
               onChange={(e) => onInputChange(e)}
             >
-              <option value="0">0</option>
+              <option selected={true} value="0">
+                0
+              </option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>

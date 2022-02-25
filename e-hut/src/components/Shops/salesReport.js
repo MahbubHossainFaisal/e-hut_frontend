@@ -4,18 +4,21 @@ import { BarChart, Bar, CartesianGrid, XAxis, YAxis } from "recharts";
 import ReactExport from "react-export-excel";
 import "./salesReport.css";
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-var data = JSON.parse(localStorage.getItem("user"));
-var cred = data.Phone + ":" + data.Password;
 const SalesReport = (props) => {
   const [SalesReportData, setSalesReportData] = useState([]);
+  const ExcelFile = ReactExport.ExcelFile;
+  const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+  const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+  var data = JSON.parse(localStorage.getItem("user"));
+  var cred = data.Phone + ":" + data.Password;
 
   useEffect(() => {
     axios
       .get(
-        "https://localhost:44390/api/Shops/monthlySalesForYearReports/" + 2022,
+        "https://localhost:44390/api/Shops/monthlySalesForYearReports/" +
+          2022 +
+          "/" +
+          data.UserId,
         {
           headers: {
             Authorization: "Basic " + btoa(cred),
