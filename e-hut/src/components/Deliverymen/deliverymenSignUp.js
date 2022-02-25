@@ -10,26 +10,37 @@ const DeliverymenSignUp = () => {
 	const [email, setEmail] = useState("");
 	const [gender, setGender] = useState("");
 	const [password, setPassword] = useState("");
-    const [image, setImage] = useState("");
-    const [nid,setNid] = useState()
+	const [image, setImage] = useState("");
+	const [nid, setNid] = useState();
+
+	var data = JSON.parse(localStorage.getItem("user"));
+	var cred = data.Phone + ":" + data.Password;
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
 		// console.log(name,manager,address,phone,email,bankInfoId,password)
 
 		await axios
-			.post("https://localhost:44390/api/shops", {
-				Name: name,
-				Address: address,
-				Phone: phone,
-				Email: email,
-				Nid: nid,
-				Status: false,
-				Rating: 0,
-				totalSold: 0.0,
-				totalRecievedPayment: 0.0,
-				password: password,
-			})
+			.post(
+				"https://localhost:44390/api/shops",
+				{
+					Name: name,
+					Address: address,
+					Phone: phone,
+					Email: email,
+					Nid: nid,
+					Status: false,
+					Rating: 0,
+					totalSold: 0.0,
+					totalRecievedPayment: 0.0,
+					password: password,
+				},
+				{
+					headers: {
+						Authorization: "Basic " + btoa(cred),
+					},
+				}
+			)
 			.then((res) => {
 				console.log(res.data.Status);
 				// if (res.data.status === 204) {
@@ -117,18 +128,18 @@ const DeliverymenSignUp = () => {
 					<Col md={6}>
 						<div className="form-group">
 							<label>Gender</label>
-						    <select
-							name="BrandId"
-							className="form-select form-select-md mb-3 "
-							onChange={(e) => setGender(e)}
-						    >
-							<option className="" value="Male">
-								Male
-							</option>
-							<option className="" value="Female">
-								Female
-							</option>
-						</select>
+							<select
+								name="BrandId"
+								className="form-select form-select-md mb-3 "
+								onChange={(e) => setGender(e)}
+							>
+								<option className="" value="Male">
+									Male
+								</option>
+								<option className="" value="Female">
+									Female
+								</option>
+							</select>
 						</div>
 					</Col>
 				</Row>
@@ -145,7 +156,7 @@ const DeliverymenSignUp = () => {
 							/>
 						</div>
 					</Col>
-                    <Col md={6}>
+					<Col md={6}>
 						<div className="form-group">
 							<label>Your Image</label>
 							<input
