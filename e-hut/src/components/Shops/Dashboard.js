@@ -6,6 +6,7 @@ import ViewReview from "./ViewReview";
 import StarRatingComponent from "react-star-rating-component";
 const ShopDashboard = (props) => {
   var user = JSON.parse(localStorage.getItem("user"));
+  var cred = user.Phone + ":" + user.Password;
   const [countPendingOrder, setCountPendingOrder] = useState(0);
   const [pendingProduct, setPendingProduct] = useState([]);
   const [processingProduct, setProcessingProduct] = useState([]);
@@ -19,7 +20,12 @@ const ShopDashboard = (props) => {
     axios
       .get(
         "https://localhost:44390/api/SalesRecords/GetNonDeliveredRecords/" +
-          user.UserId
+          user.UserId,
+        {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        }
       )
       .then((response) => {
         setCountPendingOrder(response.data.length);
@@ -35,7 +41,12 @@ const ShopDashboard = (props) => {
         "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
           user.UserId +
           "/" +
-          "Accepted"
+          "Accepted",
+        {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        }
       )
       .then((response) => {
         setCountProcessingOrder(response.data.length);
@@ -51,7 +62,12 @@ const ShopDashboard = (props) => {
         "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
           user.UserId +
           "/" +
-          "Return"
+          "Return",
+        {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        }
       )
       .then((response) => {
         setCountReturnedOrder(response.data.length);
@@ -65,9 +81,15 @@ const ShopDashboard = (props) => {
     axios
       .get(
         "https://localhost:44390/api/ShopReviews/GetDeliveredProductsReview/" +
-          user.UserId
+          user.UserId,
+        {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        }
       )
       .then((response) => {
+        console.log("chek" + response.data.length);
         setCountDeliverOrder(response.data.length);
         setDeliverProduct(response.data);
         console.log(response.data);
@@ -78,22 +100,35 @@ const ShopDashboard = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [countPendingOrder, countProcessingOrder, countDeliverOrder]);
 
   const AcceptOrder = (srId) => (e) => {
     console.log(srId);
     axios
-      .post("https://localhost:44390/api/Shops/ProductOrderAcceptance", {
-        SalesRecordId: srId,
-        status: "Accepted",
-      })
+      .post(
+        "https://localhost:44390/api/Shops/ProductOrderAcceptance",
+        {
+          SalesRecordId: srId,
+          status: "Accepted",
+        },
+        {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        }
+      )
       .then((response) => {
         console.log(response.status);
         /////////////
         axios
           .get(
             "https://localhost:44390/api/SalesRecords/GetNonDeliveredRecords/" +
-              user.UserId
+              user.UserId,
+            {
+              headers: {
+                Authorization: "Basic " + btoa(cred),
+              },
+            }
           )
           .then((response) => {
             setCountPendingOrder(response.data.length);
@@ -109,7 +144,12 @@ const ShopDashboard = (props) => {
             "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
               user.UserId +
               "/" +
-              "Accepted"
+              "Accepted",
+            {
+              headers: {
+                Authorization: "Basic " + btoa(cred),
+              },
+            }
           )
           .then((response) => {
             setCountProcessingOrder(response.data.length);
@@ -129,17 +169,30 @@ const ShopDashboard = (props) => {
   const RejectOrder = (srId) => (e) => {
     console.log(srId);
     axios
-      .post("https://localhost:44390/api/Shops/ProductOrderAcceptance", {
-        SalesRecordId: srId,
-        status: "Rejected",
-      })
+      .post(
+        "https://localhost:44390/api/Shops/ProductOrderAcceptance",
+        {
+          SalesRecordId: srId,
+          status: "Rejected",
+        },
+        {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        }
+      )
       .then((response) => {
         console.log(response.status);
         /////////////
         axios
           .get(
             "https://localhost:44390/api/SalesRecords/GetNonDeliveredRecords/" +
-              user.UserId
+              user.UserId,
+            {
+              headers: {
+                Authorization: "Basic " + btoa(cred),
+              },
+            }
           )
           .then((response) => {
             setCountPendingOrder(response.data.length);
@@ -158,10 +211,18 @@ const ShopDashboard = (props) => {
 
   const DeliverOrder = (srId) => (e) => {
     axios
-      .post("https://localhost:44390/api/Shops/ProductOrderAcceptance", {
-        SalesRecordId: srId,
-        status: "Delivered",
-      })
+      .post(
+        "https://localhost:44390/api/Shops/ProductOrderAcceptance",
+        {
+          SalesRecordId: srId,
+          status: "Delivered",
+        },
+        {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        }
+      )
       .then((response) => {
         console.log(response.status);
         axios
@@ -169,7 +230,12 @@ const ShopDashboard = (props) => {
             "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
               user.UserId +
               "/" +
-              "Accepted"
+              "Accepted",
+            {
+              headers: {
+                Authorization: "Basic " + btoa(cred),
+              },
+            }
           )
           .then((response) => {
             setCountProcessingOrder(response.data.length);
@@ -187,10 +253,18 @@ const ShopDashboard = (props) => {
 
   const AcceptReturnOrder = (srId) => (e) => {
     axios
-      .post("https://localhost:44390/api/Shops/ProductOrderAcceptance", {
-        SalesRecordId: srId,
-        status: "Returned",
-      })
+      .post(
+        "https://localhost:44390/api/Shops/ProductOrderAcceptance",
+        {
+          SalesRecordId: srId,
+          status: "Returned",
+        },
+        {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        }
+      )
       .then((response) => {
         console.log(response.status);
         axios
@@ -198,7 +272,12 @@ const ShopDashboard = (props) => {
             "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
               user.UserId +
               "/" +
-              "Return"
+              "Return",
+            {
+              headers: {
+                Authorization: "Basic " + btoa(cred),
+              },
+            }
           )
           .then((response) => {
             setCountReturnedOrder(response.data.length);
@@ -216,10 +295,18 @@ const ShopDashboard = (props) => {
 
   const RejectReturnOrder = (srId) => (e) => {
     axios
-      .post("https://localhost:44390/api/Shops/ProductOrderAcceptance", {
-        SalesRecordId: srId,
-        status: "Rejected",
-      })
+      .post(
+        "https://localhost:44390/api/Shops/ProductOrderAcceptance",
+        {
+          SalesRecordId: srId,
+          status: "Rejected",
+        },
+        {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        }
+      )
       .then((response) => {
         console.log(response.status);
         axios
@@ -227,7 +314,12 @@ const ShopDashboard = (props) => {
             "https://localhost:44390/api/SalesRecords/GetRecordsByStatus/" +
               user.UserId +
               "/" +
-              "Return"
+              "Return",
+            {
+              headers: {
+                Authorization: "Basic " + btoa(cred),
+              },
+            }
           )
           .then((response) => {
             setCountReturnedOrder(response.data.length);
@@ -278,6 +370,7 @@ const ShopDashboard = (props) => {
           <p id="tOrderText">Pending Order</p>
           <p id="tOrderCount">{countPendingOrder}</p>
           <button
+            style={{ color: "black" }}
             id="penBtn"
             type="button"
             class="btn btn-outline-primary "
@@ -290,6 +383,7 @@ const ShopDashboard = (props) => {
           <p id="tOrderText">Processing</p>
           <p id="tOrderCount">{countProcessingOrder}</p>
           <button
+            style={{ color: "black" }}
             id="penBtn"
             type="button"
             class="btn btn-outline-primary "
@@ -303,6 +397,7 @@ const ShopDashboard = (props) => {
           <p id="tOrderText">Delivered</p>
           <p id="tOrderCount">{countDeliverOrder}</p>
           <button
+            style={{ color: "black" }}
             id="penBtn"
             type="button"
             class="btn btn-outline-primary "
@@ -316,6 +411,7 @@ const ShopDashboard = (props) => {
           <p id="tOrderText">Returned</p>
           <p id="tOrderCount">{countReturnedOrder}</p>
           <button
+            style={{ color: "black" }}
             id="penBtn"
             type="button"
             class="btn btn-outline-primary "

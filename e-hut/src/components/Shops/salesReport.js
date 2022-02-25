@@ -32,7 +32,7 @@ const SalesReport = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [SalesReportData]);
 
   return (
     <React.Fragment>
