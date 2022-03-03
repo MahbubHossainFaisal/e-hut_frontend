@@ -37,7 +37,7 @@ const SalesReport = (props) => {
   return (
     <React.Fragment>
       <label className="m-3">Amount</label>
-      <BarChart width={600} height={600} data={SalesReportData}>
+      <BarChart width={1000} height={600} data={SalesReportData}>
         <Bar dataKey="y" fill="green" />
         <CartesianGrid stroke="#ccc" />
         <XAxis dataKey="label" />

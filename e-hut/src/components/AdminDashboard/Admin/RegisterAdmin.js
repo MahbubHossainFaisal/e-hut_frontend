@@ -50,6 +50,9 @@ const RegisterAdmin = () => {
     } else if (name.length < 5) {
       errors.name = " Name at least contain 5 charecter";
     }
+    if (!isNaN(name)) {
+      errors.name = " Name must contain charecters only";
+    }
     if (phone === "") {
       errors.phone = "Phone Is Requeired";
     } else if (isNaN(phone)) {
@@ -84,7 +87,7 @@ const RegisterAdmin = () => {
 
     if (address === "") {
       errors.address = "Address Is Requeired";
-    } else if (address.length < 6) {
+    } else if (address.length < 5) {
       errors.address = "Address at least contain 5 charecter";
     }
     //console.log(errors);
