@@ -7,26 +7,38 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 const ShopProfile = () => {
+  var data = JSON.parse(localStorage.getItem("user"));
+  var cred = data.Phone + ":" + data.Password;
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("working");
     await axios
-      .put("https://localhost:44390/api/shops/" + ShopId, {
-        ShopId: ShopId,
-        Name: shopName,
-        ShopManager: sManagerName,
-        Address: Address,
-        Phone: Phone,
-        Email: Email,
-        BankInformationId: BInfoId,
-        Status: Status,
-        Rating: Rating,
-        TotalSold: TotalSold,
-        TotalRecievedPayment: TotalRecieved,
-        Password: Password,
-      })
+      .put(
+        "https://localhost:44390/api/shops/" + ShopId,
+        {
+          ShopId: ShopId,
+          Name: shopName,
+          ShopManager: sManagerName,
+          Address: Address,
+          Phone: Phone,
+          Email: Email,
+          BankInformationId: BInfoId,
+          Status: Status,
+          Rating: Rating,
+          TotalSold: TotalSold,
+          TotalRecievedPayment: TotalRecieved,
+          Password: Password,
+        },
+        {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        }
+      )
       .then((res) => {
-        console.log(res.status);
+        if (res.status == 200) {
+          alert("Profile Updated");
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -52,7 +64,11 @@ const ShopProfile = () => {
     if (user != null) {
       var data = JSON.parse(localStorage.getItem("user"));
       axios
-        .get("https://localhost:44390/api/shops/" + data.UserId)
+        .get("https://localhost:44390/api/shops/" + data.UserId, {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        })
         .then((response) => {
           console.log(response.data);
           SetShopId(response.data.ShopId);
