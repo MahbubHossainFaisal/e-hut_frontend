@@ -6,7 +6,6 @@ import userTypeContext from "../store/userTypeContext";
 
 const Header = (props) => {
   const loginCtx = useContext(LoginContext);
-  console.log(useContext(userTypeContext));
   const history = useHistory();
   let data = "";
   let pathProfile = "";
@@ -15,9 +14,6 @@ const Header = (props) => {
 
   const setPathProfile = (e) => {
     data = JSON.parse(localStorage.getItem("user"));
-
-    console.log(data);
-
     if (data !== null) {
       if (data.Role === "Customer") {
         pathProfile = "/user/profile";

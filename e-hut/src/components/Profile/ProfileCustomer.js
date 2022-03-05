@@ -7,171 +7,218 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 const Profile = () => {
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		console.log("working");
-		await axios
-			.put("https://localhost:44390/api/customers/" + customerId, {
-				CustomerId: customerId,
-				Name: name,
-				Phone: phone,
-				Email: email,
-				Address: address,
-				Email: email,
-				Image: image,
-				Gender: gender,
-				Password: password,
-				Occupation: occupation,
-				NumberOfFamilyMemberAdult: numberOfFamilyMemberAdult,
-				NumberOfFamilyMemberChild: numberOfFamilyMemberChild,
-				NumberOfDeliveryGrocery: numberOfDeliveryGrocery,
-				NumberOfDeliveryVegetable: numberOfDeliveryVegetable,
-				DeliveryDay: deliveryDay,
-				DeliveryTime: deliveryTime,
-			})
-			.then((res) => {
-				console.log(res.status);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
+  var data = JSON.parse(localStorage.getItem("user"));
+  var cred = data.Phone + ":" + data.Password;
 
-	const [customerId, setCustomerId] = useState("");
-	const [phone, setPhone] = useState("");
-	const [name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [address, setAddress] = useState("");
-	const [image, setImage] = useState("");
-	const [gender, setGender] = useState("");
-	const [password, setPassword] = useState("");
-	const [occupation, setOccupation] = useState("");
-	const [numberOfFamilyMemberAdult, setNumberOfFamilyMemberAdult] =
-		useState("");
-	const [numberOfFamilyMemberChild, setNumberOfFamilyMemberChild] =
-		useState("");
-	const [numberOfDeliveryGrocery, setNumberOfDeliveryGrocery] = useState("");
-	const [numberOfDeliveryVegetable, setNumberOfDeliveryVegetable] =
-		useState("");
-	const [deliveryDay, setDeliveryDay] = useState("");
-	const [deliveryTime, setDeliveryTime] = useState("");
+  const [customerId, setCustomerId] = useState("");
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [image, setImage] = useState("");
+  const [gender, setGender] = useState("");
+  const [password, setPassword] = useState("");
+  const [occupation, setOccupation] = useState("");
+  const [numberOfFamilyMemberAdult, setNumberOfFamilyMemberAdult] =
+    useState("");
+  const [numberOfFamilyMemberChild, setNumberOfFamilyMemberChild] =
+    useState("");
+  const [numberOfDeliveryGrocery, setNumberOfDeliveryGrocery] = useState("");
+  const [numberOfDeliveryVegetable, setNumberOfDeliveryVegetable] =
+    useState("");
+  const [deliveryDay, setDeliveryDay] = useState("");
+  const [deliveryTime, setDeliveryTime] = useState("");
 
-	React.useEffect(() => {
-		var user = localStorage.getItem("user");
-		if (user != null) {
-			var data = JSON.parse(localStorage.getItem("user"));
-			axios
-				.get("https://localhost:44390/api/customers/" + data.UserId)
-				.then((response) => {
-					setCustomerId(response.data.CustomerId);
-					setPhone(response.data.Phone);
-					setEmail(response.data.Email);
-					setName(response.data.Name);
-					setAddress(response.data.Address);
-					setImage(response.data.Image);
-					setGender(response.data.Gender);
-					setPassword(response.data.Password);
-					setNumberOfFamilyMemberAdult(response.data.NumberOffamilyMemberAdult);
-					setNumberOfFamilyMemberChild(response.data.NumberOffamilyMemberChild);
-					setNumberOfDeliveryGrocery(response.data.NumberOfDeliveryGrocery);
-					setNumberOfDeliveryVegetable(response.data.numberOfDeliveryVegetable);
-					setDeliveryTime(response.data.DeliveryTime);
-					setDeliveryDay(response.data.DeliveryDay);
-					//console.log(customerId);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
 
-			//	console.log(data);
-		} else {
-			return <Redirect to="/login" />;
-		}
-	}, []);
+  const SubmitHandler = async (e) => {
+    e.preventDefault();
+    setIsSubmit(true);
+    setFormErrors(Validate());
+    e.preventDefault();
+  };
 
-	//console.log(user.Role);
-	return (
-		<React.Fragment>
-			<div className="profile">
-				<table>
-					<tr>
-						<td>
-							<Image
-								src={ImgData}
-								alt="profile"
-								className=" img-thumbnail image"
-							></Image>
-						</td>
-						<td>
-							<label htmlFor="">User Profile</label>
-						</td>
-					</tr>
-				</table>
-				<hr></hr>
-				<Form onSubmit={handleSubmit}>
-					<Row className="mb-3">
-						<Form.Group as={Col} controlId="name">
-							<Form.Label>Name</Form.Label>
-							<Form.Control
-								type="text"
-								name="name"
-								value={name}
-								onChange={(event) => setName(event.target.value)}
-							/>
-						</Form.Group>
+  const Validate = () => {
+    const errors = {};
 
-						<Form.Group as={Col} controlId="email">
-							<Form.Label>Email</Form.Label>
-							<Form.Control
-								type="email"
-								name="email"
-								value={email}
-								onChange={setEmail}
-							/>
-						</Form.Group>
-					</Row>
-					<Row className="mb-3">
-						<Form.Group as={Col} controlId="name">
-							<Form.Label>Phone</Form.Label>
-							<Form.Control
-								type="text"
-								name="phone"
-								value={phone}
-								onChange={setPhone}
-							/>
-						</Form.Group>
+    if (name === "") {
+      errors.name = " Name Is Requeired";
+    } else if (name.length < 3) {
+      errors.name = " Name at least contain 3 charecter";
+    }
 
-						<Form.Group as={Col} className="mb-3">
-							<Form.Label>Select Image</Form.Label>
-							<Form.Control type="file" name="image" />
-						</Form.Group>
-					</Row>
-					<Form.Group className="mb-3" controlId="formGridAddress2">
-						<Form.Label>Address</Form.Label>
-						<Form.Control
-							placeholder=""
-							name="address"
-							value={address}
-							onChange={(event) => setAddress(event.target.value)}
-						/>
-					</Form.Group>
-					<div>
-						<Button variant="primary" type="submit">
-							Save
-						</Button>
+    if (address === "") {
+      errors.address = "Address Is Requeired";
+    } else if (address.length < 5) {
+      errors.address = "Address at least contain 5 charecter";
+    }
+    //console.log(errors);
+    console.log(formErrors);
+    return errors;
+  };
 
-						<NavLink to={"/user/profile/info"} className="btn btn-primary m-1">
-							Additional Information
-						</NavLink>
-					</div>
-				</Form>
-			</div>
-			<br />
-			<br />
-			<br />
-			<br />
-		</React.Fragment>
-	);
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log("calling ready for api");
+      axios
+        .put(
+          "https://localhost:44390/api/customers/" + customerId,
+          {
+            CustomerId: customerId,
+            Name: name,
+            Phone: phone,
+            Email: email,
+            Address: address,
+            Email: email,
+            Image: image,
+            Gender: gender,
+            Password: password,
+            Occupation: occupation,
+            NumberOfFamilyMemberAdult: numberOfFamilyMemberAdult,
+            NumberOfFamilyMemberChild: numberOfFamilyMemberChild,
+            NumberOfDeliveryGrocery: numberOfDeliveryGrocery,
+            NumberOfDeliveryVegetable: numberOfDeliveryVegetable,
+            DeliveryDay: deliveryDay,
+            DeliveryTime: deliveryTime,
+          },
+          {
+            headers: {
+              Authorization: "Basic " + btoa(cred),
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.status);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [formErrors]);
+
+  React.useEffect(() => {
+    var user = localStorage.getItem("user");
+    if (user != null) {
+      var data = JSON.parse(localStorage.getItem("user"));
+      axios
+        .get("https://localhost:44390/api/customers/" + data.UserId, {
+          headers: {
+            Authorization: "Basic " + btoa(cred),
+          },
+        })
+        .then((response) => {
+          setCustomerId(response.data.CustomerId);
+          setPhone(response.data.Phone);
+          setEmail(response.data.Email);
+          setName(response.data.Name);
+          setAddress(response.data.Address);
+          setImage(response.data.Image);
+          setGender(response.data.Gender);
+          setPassword(response.data.Password);
+          setNumberOfFamilyMemberAdult(response.data.NumberOffamilyMemberAdult);
+          setNumberOfFamilyMemberChild(response.data.NumberOffamilyMemberChild);
+          setNumberOfDeliveryGrocery(response.data.NumberOfDeliveryGrocery);
+          setNumberOfDeliveryVegetable(response.data.numberOfDeliveryVegetable);
+          setDeliveryTime(response.data.DeliveryTime);
+          setDeliveryDay(response.data.DeliveryDay);
+          //console.log(customerId);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      //	console.log(data);
+    } else {
+      return <Redirect to="/login" />;
+    }
+  }, []);
+
+  //console.log(user.Role);
+  return (
+    <React.Fragment>
+      <div className="profile">
+        <table>
+          <tr>
+            <td>
+              <Image
+                src={ImgData}
+                alt="profile"
+                className=" img-thumbnail image"
+              ></Image>
+            </td>
+            <td>
+              <label htmlFor="">User Profile</label>
+            </td>
+          </tr>
+        </table>
+        <hr></hr>
+        <Form onSubmit={SubmitHandler}>
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+              />
+              <p className="error">{formErrors.name}</p>
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={email}
+                disabled={true}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="name">
+              <Form.Label>Phone</Form.Label>
+              <Form.Control
+                type="text"
+                name="phone"
+                value={phone}
+                disabled={true}
+              />
+            </Form.Group>
+
+            <Form.Group as={Col} className="mb-3">
+              <Form.Label>Select Image</Form.Label>
+              <Form.Control type="file" name="image" />
+            </Form.Group>
+          </Row>
+          <Form.Group className="mb-3" controlId="formGridAddress2">
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              placeholder=""
+              name="address"
+              value={address}
+              onChange={(event) => setAddress(event.target.value)}
+            />
+            <p className="error">{formErrors.address}</p>
+          </Form.Group>
+          <div>
+            <Button variant="primary" type="submit">
+              Save
+            </Button>
+
+            <NavLink to={"/user/profile/info"} className="btn btn-primary m-1">
+              Additional Information
+            </NavLink>
+          </div>
+        </Form>
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+    </React.Fragment>
+  );
 };
 
 export default Profile;

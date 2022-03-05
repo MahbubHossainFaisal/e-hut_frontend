@@ -9,41 +9,6 @@ import axios from "axios";
 const ShopProfile = () => {
   var data = JSON.parse(localStorage.getItem("user"));
   var cred = data.Phone + ":" + data.Password;
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("working");
-    await axios
-      .put(
-        "https://localhost:44390/api/shops/" + ShopId,
-        {
-          ShopId: ShopId,
-          Name: shopName,
-          ShopManager: sManagerName,
-          Address: Address,
-          Phone: Phone,
-          Email: Email,
-          BankInformationId: BInfoId,
-          Status: Status,
-          Rating: Rating,
-          TotalSold: TotalSold,
-          TotalRecievedPayment: TotalRecieved,
-          Password: Password,
-        },
-        {
-          headers: {
-            Authorization: "Basic " + btoa(cred),
-          },
-        }
-      )
-      .then((res) => {
-        if (res.status == 200) {
-          alert("Profile Updated");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   const [ShopId, SetShopId] = useState("");
   const [sManagerName, SetsManagerName] = useState("");
@@ -58,6 +23,78 @@ const ShopProfile = () => {
   const [TotalSold, SetTotalSold] = useState("");
   const [TotalRecieved, SetTotalRecieved] = useState("");
   const [Password, SetPassword] = useState("");
+
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const SubmitHandler = async (e) => {
+    e.preventDefault();
+    setIsSubmit(true);
+    setFormErrors(Validate());
+    e.preventDefault();
+  };
+
+  const Validate = () => {
+    const errors = {};
+
+    if (sManagerName === "") {
+      errors.sManagerName = " Name Is Requeired";
+    } else if (sManagerName.length < 5) {
+      errors.sManagerName = " Name at least contain 5 charecter";
+    }
+
+    if (shopName === "") {
+      errors.shopName = " Name Is Requeired";
+    } else if (shopName.length < 2) {
+      errors.shopName = " Name at least contain 2 charecter";
+    }
+
+    if (Address === "") {
+      errors.Address = "Address Is Requeired";
+    } else if (Address.length < 5) {
+      errors.Address = "Address at least contain 5 charecter";
+    }
+    //console.log(errors);
+    console.log(formErrors);
+    return errors;
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log("calling ready for api");
+      axios
+        .put(
+          "https://localhost:44390/api/shops/" + ShopId,
+          {
+            ShopId: ShopId,
+            Name: shopName,
+            ShopManager: sManagerName,
+            Address: Address,
+            Phone: Phone,
+            Email: Email,
+            BankInformationId: BInfoId,
+            Status: Status,
+            Rating: Rating,
+            TotalSold: TotalSold,
+            TotalRecievedPayment: TotalRecieved,
+            Password: Password,
+          },
+          {
+            headers: {
+              Authorization: "Basic " + btoa(cred),
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status == 200) {
+            alert("Profile Updated");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [formErrors]);
 
   React.useEffect(() => {
     var user = localStorage.getItem("user");
@@ -113,7 +150,7 @@ const ShopProfile = () => {
           </tr>
         </table>
         <hr></hr>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={SubmitHandler}>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="name">
               <Form.Label>Name</Form.Label>
@@ -123,6 +160,7 @@ const ShopProfile = () => {
                 value={sManagerName}
                 onChange={(event) => SetsManagerName(event.target.value)}
               />
+              <p className="error">{formErrors.sManagerName}</p>
             </Form.Group>
             <Form.Group as={Col} controlId="name">
               <Form.Label>Shop Name</Form.Label>
@@ -132,6 +170,7 @@ const ShopProfile = () => {
                 value={shopName}
                 onChange={(event) => SetShopName(event.target.value)}
               />
+              <p className="error">{formErrors.shopName}</p>
             </Form.Group>
 
             <Form.Group as={Col} controlId="email">
@@ -168,6 +207,7 @@ const ShopProfile = () => {
               value={Address}
               onChange={(event) => SetAddress(event.target.value)}
             />
+            <p className="error">{formErrors.Address}</p>
           </Form.Group>
           <div>
             <Button variant="primary" type="submit">
